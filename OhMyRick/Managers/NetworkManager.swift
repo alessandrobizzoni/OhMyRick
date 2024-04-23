@@ -34,7 +34,7 @@ class NetworkManager {
         }
         
         guard let url = URL(string: nextUrl) else {
-            return Fail(error: URLError(.badURL)).eraseToAnyPublisher()
+            return Fail(error: RMErrors.invalidURL).eraseToAnyPublisher()
         }
         
         return URLSession.shared.dataTaskPublisher(for: url)
@@ -43,6 +43,30 @@ class NetworkManager {
             .map {
                 print("[DEBUG] \($0)")
                 self.cache.insert($0, forKey: nextUrl)
+                return $0
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    func getFilteredCharacters(filterParameters: [String: String?]) -> AnyPublisher<Response, Error> {
+        var urlComponents = URLComponents(string: charactersURL)
+        urlComponents?.queryItems = filterParameters.map {
+            URLQueryItem(
+                name: $0.key,
+                value: $0.value
+            )
+        }
+        
+        guard let url = urlComponents?.url else {
+            return Fail(error: RMErrors.invalidURL).eraseToAnyPublisher()
+        }
+        
+        return URLSession.shared.dataTaskPublisher(for: url)
+            .map(\.data)
+            .decode(type: Response.self, decoder: JSONDecoder())
+            .map {
+                print("[DEBUG] \($0)")
+//                self.cache.insert($0, forKey: String(contentsOf: url))
                 return $0
             }
             .eraseToAnyPublisher()

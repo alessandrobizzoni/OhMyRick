@@ -9,6 +9,8 @@ import SwiftUI
 
 struct OhMyRickMainView: View {
     
+    @EnvironmentObject private var coordinator: Coordinator
+    
     let kScreenTitle: String = "Oh My Rick"
     
     let kScreenSubtitle: String = "The Rick's extended documentation"
@@ -16,57 +18,56 @@ struct OhMyRickMainView: View {
     @State private var portalAnimation = 0.0
     
     var body: some View {
-        NavigationView {
-            VStack(spacing: 80) {
-                Text(kScreenTitle)
+        VStack(spacing: 80) {
+            Text(kScreenTitle)
+                .font(
+                    .system(
+                        size: 50,
+                        weight: .bold,
+                        design: .rounded
+                    )
+                )
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .frame(height: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, alignment: .top)
+                .padding(.top)
+            
+            HStack(spacing: 10) {
+                Text("Characters")
                     .font(
                         .system(
-                            size: 50,
+                            size: 20,
                             weight: .bold,
                             design: .rounded
                         )
                     )
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .frame(height: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, alignment: .top)
-                    .padding(.top)
-                
-                HStack(spacing: 10) {
-                    NavigationLink(destination: CharactersView()) {
-                        Text("Characters")
-                            .font(
-                                .system(
-                                    size: 20,
-                                    weight: .bold,
-                                    design: .rounded
-                                )
-                            )
-                            .foregroundStyle(.primaryRick)
-                            .background {
-                                Rectangle()
-                                    .fill(Color.secondaryRick)
-                                    .cornerRadius(6.0)
-                                    .frame(width: 150, height: 50)
-                            }
+                    .foregroundStyle(.primaryRick)
+                    .background {
+                        Rectangle()
+                            .fill(Color.secondaryRick)
+                            .cornerRadius(6.0)
+                            .frame(width: 150, height: 50)
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    
-                    portalImage
-                        .frame(height: 320)
-                }
+                    .onTapGesture {
+                        coordinator.push(page: .charactersList)
+                    }
+                
+                portalImage
+                    .frame(height: 320)
             }
-            .padding()
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(
-                LinearGradient(
-                    colors: [.primaryRick, .secondaryRick],
-                    startPoint: .top,
-                    endPoint: .bottom
-                )
+        }
+        .padding()
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(
+            LinearGradient(
+                colors: [.primaryRick, .secondaryRick],
+                startPoint: .top,
+                endPoint: .bottom
             )
-            .onAppear {
-                withAnimation(.easeInOut(duration: 10)) {
-                    portalAnimation += 360
-                }
+        )
+        .onAppear {
+            withAnimation(.easeInOut(duration: 10)) {
+                portalAnimation += 360
             }
         }
     }

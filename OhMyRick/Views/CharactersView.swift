@@ -9,6 +9,8 @@ import SwiftUI
 
 struct CharactersView: View {
     
+    @EnvironmentObject private var coordinator: Coordinator
+    
     @StateObject var viewModel: CharactersViewModel = CharactersViewModel()
     
     @State private var searchName: String = ""
@@ -19,57 +21,55 @@ struct CharactersView: View {
     
     var body: some View {
         ZStack {
-            NavigationView {
-                VStack {
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        filterButtons
-                    }
-                    if viewModel.filteredCharacters.isEmpty {
-                        emptyState
-                    } else {
-                        charactersList
-                    }
-                    HStack {
-                        if shouldShowPrevPageButton {
-                            Spacer()
-                            Button {
-                                viewModel.currentPage -= 1
-                                viewModel.getAllCharacters(.prev)
-                            } label: {
-                                Text("Previous")
-                                    .font(
-                                        .system(
-                                            size: 20,
-                                            weight: .bold,
-                                            design: .rounded
-                                        )
+            VStack {
+                ScrollView(.horizontal, showsIndicators: false) {
+                    filterButtons
+                }
+                if viewModel.filteredCharacters.isEmpty {
+                    emptyState
+                } else {
+                    charactersList
+                }
+                HStack {
+                    if shouldShowPrevPageButton {
+                        Spacer()
+                        Button {
+                            viewModel.currentPage -= 1
+                            viewModel.getAllCharacters(.prev)
+                        } label: {
+                            Text("Previous")
+                                .font(
+                                    .system(
+                                        size: 20,
+                                        weight: .bold,
+                                        design: .rounded
                                     )
-                                    .foregroundStyle(.secondaryRick)
-                            }
+                                )
+                                .foregroundStyle(.secondaryRick)
+                        }
+                    }
+                    Spacer()
+                    if shouldShowNextPageButton {
+                        Button {
+                            viewModel.currentPage += 1
+                            viewModel.getAllCharacters(.next)
+                        } label: {
+                            Text("Next")
+                                .font(
+                                    .system(
+                                        size: 20,
+                                        weight: .bold,
+                                        design: .rounded
+                                    )
+                                )
+                                .foregroundStyle(.secondaryRick)
                         }
                         Spacer()
-                        if shouldShowNextPageButton {
-                            Button {
-                                viewModel.currentPage += 1
-                                viewModel.getAllCharacters(.next)
-                            } label: {
-                                Text("Next")
-                                    .font(
-                                        .system(
-                                            size: 20,
-                                            weight: .bold,
-                                            design: .rounded
-                                        )
-                                    )
-                                    .foregroundStyle(.secondaryRick)
-                            }
-                            Spacer()
-                        }
                     }
-                    .padding()
                 }
-                .background(Color.primaryRick)
+                .padding()
             }
+            .background(Color.primaryRick)
             .navigationTitle("🥒Characters")
             .navigationBarTitleDisplayMode(.automatic)
             .searchable(text: $searchName, prompt: "Search Name")
@@ -89,7 +89,7 @@ struct CharactersView: View {
         }
     }
 }
- // MARK: - Helper Views
+// MARK: - Helper Views
 private extension CharactersView {
     var charactersList: some View {
         VStack(alignment: .leading) {
@@ -115,8 +115,10 @@ private extension CharactersView {
             ForEach(CharacterGender.allCases, id: \.self) { gender in
                 Button {
                     if viewModel.selectedGender == gender {
+                        viewModel.filterParameters.removeValue(forKey: "gender")
                         viewModel.selectedGender = nil
                     } else {
+                        viewModel.filterParameters.updateValue(gender.rawValue, forKey: "gender")
                         viewModel.selectedGender = gender
                     }
                 } label: {

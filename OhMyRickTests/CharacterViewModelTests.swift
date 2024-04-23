@@ -14,10 +14,12 @@ class CharactersViewModelTests: XCTestCase {
     var viewModel: CharactersViewModel!
     var networkManager: MockNetworkManager!
     var cancellables: Set<AnyCancellable> = []
+    var cache: Cache<String, Response>!
     
     override func setUp() {
         super.setUp()
         networkManager = MockNetworkManager()
+        cache = Cache<String, Response>()
         viewModel = CharactersViewModel()
         viewModel.networkManager = networkManager
     }
@@ -25,6 +27,7 @@ class CharactersViewModelTests: XCTestCase {
     override func tearDown() {
         viewModel = nil
         networkManager = nil
+        cache = nil
         super.tearDown()
     }
     
@@ -40,8 +43,31 @@ class CharactersViewModelTests: XCTestCase {
         
         // Assert
         XCTAssertEqual(viewModel.characters.count, 1)
+        XCTAssertEqual(viewModel.responseInfo?.count, 1)
+        XCTAssertEqual(viewModel.responseInfo?.pages, 1)
+        XCTAssertEqual(viewModel.characters.first?.name, "Rick")
+        XCTAssertFalse(viewModel.networkError)
+        XCTAssertNil(cache.value(forKey: "https://example.com/page2"))
     }
-
+    
+    func testGetAllCharacters_CachedResponse() {
+        // Arrange
+        let responseInfo = Info(count: 1, pages: 1, next: nil, prev: nil)
+        let character = Character(id: 1, name: "Morty", status: .alive, species: "Human", gender: .male, image: "")
+        let cachedResponse = Response(info: responseInfo, results: [character])
+        let nextPageURL = "https://example.com/page2"
+        cache.insert(cachedResponse, forKey: nextPageURL)
+        
+        // Act
+        viewModel.getAllCharacters(.next)
+        
+        // Assert
+        XCTAssertEqual(viewModel.characters.count, 1)
+        XCTAssertEqual(viewModel.responseInfo?.count, 1)
+        XCTAssertEqual(viewModel.responseInfo?.pages, 1)
+        XCTAssertEqual(viewModel.characters.first?.name, "Morty")
+        XCTAssertFalse(viewModel.networkError)
+    }
     
     func testGetAllCharacters_FailureResponse() {
         // Arrange
@@ -57,15 +83,21 @@ class CharactersViewModelTests: XCTestCase {
         XCTAssertTrue(viewModel.networkError)
     }
     
-    func testSelectedGender() {
-        viewModel.characters = [
-            .init(id: 1, name: "Test1", status: .alive, species: "Human", gender: .male, image: ""),
-            .init(id: 2, name: "Test2", status: .alive, species: "Human", gender: .female, image: "")
-        ]
+    func testFilteredCharacters() {
+        // Arrange
+        let rick = Character(id: 1, name: "Rick", status: .alive, species: "Human", gender: .male, image: "")
+        let morty = Character(id: 2, name: "Morty", status: .alive, species: "Human", gender: .male, image: "")
+        let summer = Character(id: 3, name: "Summer", status: .alive, species: "Human", gender: .female, image: "")
+        viewModel.characters = [rick, morty, summer]
         
+        // Act
         viewModel.selectedGender = .male
         
-        XCTAssertEqual(viewModel.characters.count, 1)
+        // Assert
+        XCTAssertEqual(viewModel.filteredCharacters.count, 2)
+        XCTAssertTrue(viewModel.filteredCharacters.contains(where: { $0.name == "Rick" }))
+        XCTAssertTrue(viewModel.filteredCharacters.contains(where: { $0.name == "Morty" }))
+        XCTAssertFalse(viewModel.filteredCharacters.contains(where: { $0.name == "Summer" }))
     }
 }
 

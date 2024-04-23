@@ -29,6 +29,8 @@
 		92E5CEDA2BCFD788002103C3 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E5CED92BCFD788002103C3 /* NetworkManager.swift */; };
 		92E5CEDD2BCFD9BB002103C3 /* RMErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E5CEDC2BCFD9BB002103C3 /* RMErrors.swift */; };
 		92E5CEDF2BD005B9002103C3 /* CharacterDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E5CEDE2BD005B9002103C3 /* CharacterDetailView.swift */; };
+		92E6B9732BD7A8C6004B02E2 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E6B9722BD7A8C5004B02E2 /* Coordinator.swift */; };
+		92E6B9752BD7AA44004B02E2 /* CoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E6B9742BD7AA44004B02E2 /* CoordinatorView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +76,8 @@
 		92E5CED92BCFD788002103C3 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		92E5CEDC2BCFD9BB002103C3 /* RMErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMErrors.swift; sourceTree = "<group>"; };
 		92E5CEDE2BD005B9002103C3 /* CharacterDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterDetailView.swift; sourceTree = "<group>"; };
+		92E6B9722BD7A8C5004B02E2 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		92E6B9742BD7AA44004B02E2 /* CoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +128,7 @@
 		92E5CE9A2BCFA1D2002103C3 /* OhMyRick */ = {
 			isa = PBXGroup;
 			children = (
+				92E6B9712BD7A87E004B02E2 /* Coordinator */,
 				92E5CED82BCFD76D002103C3 /* Managers */,
 				92E5CED02BCFB00C002103C3 /* ViewModels */,
 				92E5CECF2BCFB001002103C3 /* Views */,
@@ -226,6 +231,15 @@
 				92E5CEDC2BCFD9BB002103C3 /* RMErrors.swift */,
 			);
 			path = Errors;
+			sourceTree = "<group>";
+		};
+		92E6B9712BD7A87E004B02E2 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				92E6B9722BD7A8C5004B02E2 /* Coordinator.swift */,
+				92E6B9742BD7AA44004B02E2 /* CoordinatorView.swift */,
+			);
+			path = Coordinator;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -359,6 +373,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				92E5CEC72BCFA751002103C3 /* Character.swift in Sources */,
+				92E6B9752BD7AA44004B02E2 /* CoordinatorView.swift in Sources */,
 				9276FE8C2BD565E1001B4EA3 /* Cache.swift in Sources */,
 				92E5CECA2BCFABFD002103C3 /* CharacterStatus.swift in Sources */,
 				92E5CEDA2BCFD788002103C3 /* NetworkManager.swift in Sources */,
@@ -368,6 +383,7 @@
 				92E5CED72BCFB5FB002103C3 /* CardCharacter.swift in Sources */,
 				92E5CED42BCFB566002103C3 /* CharactersView.swift in Sources */,
 				92E5CE9E2BCFA1D2002103C3 /* OhMyRickMainView.swift in Sources */,
+				92E6B9732BD7A8C6004B02E2 /* Coordinator.swift in Sources */,
 				92E5CECC2BCFAC0E002103C3 /* CharacterGender.swift in Sources */,
 				92E5CEDD2BCFD9BB002103C3 /* RMErrors.swift in Sources */,
 				9276FE8E2BD56D62001B4EA3 /* OMRAsyncImage.swift in Sources */,
@@ -546,7 +562,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -576,7 +592,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

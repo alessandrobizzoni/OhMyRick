@@ -11,7 +11,7 @@ import SwiftUI
 struct OhMyRickApp: App {
     var body: some Scene {
         WindowGroup {
-            OhMyRickMainView()
+            CoordinatorView()
         }
     }
 }

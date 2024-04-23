@@ -28,6 +28,15 @@ class CharactersViewModel: ObservableObject {
     
     @Published var filteredCharacters: [Character] = []
     
+    @Published var filterParameters: [String: String?] = [
+        "name": nil,
+        "gender": nil
+    ] {
+        didSet {
+            getFilteredCharacters()
+        }
+    }
+    
     @Published var selectedGender: CharacterGender? = nil {
         didSet {
             updateFilteredCharacters()
@@ -61,6 +70,25 @@ class CharactersViewModel: ObservableObject {
                 }
                 .store(in: &cancellable)
         }
+    }
+    
+    func getFilteredCharacters() {
+        networkManager.getFilteredCharacters(filterParameters: filterParameters)
+            .receive(on: DispatchQueue.main)
+            .sink { completion in
+                switch completion {
+                case .finished:
+                    print("Request done")
+                    
+                case .failure(let error):
+                    print("[DEBUG ERROR] \(error.localizedDescription)")
+                    self.networkError = true
+                }
+            } receiveValue: { newValue in
+                self.responseInfo = newValue.info
+                self.filteredCharacters = newValue.results
+            }
+            .store(in: &cancellable)
     }
     
     private func updateFilteredCharacters() {
