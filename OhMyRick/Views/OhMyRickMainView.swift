@@ -15,8 +15,6 @@ struct OhMyRickMainView: View {
     
     let kScreenSubtitle: String = "The Rick's extended documentation"
     
-    @State private var portalAnimation = 0.0
-    
     var body: some View {
         VStack(spacing: 80) {
             Text(kScreenTitle)
@@ -54,11 +52,6 @@ struct OhMyRickMainView: View {
                 
                 portalImage
                     .frame(height: 320)
-                    .onAppear {
-                        withAnimation(.easeInOut(duration: 10)) {
-                            portalAnimation += 360
-                        }
-                    }
             }
         }
         .padding()
@@ -82,7 +75,6 @@ private extension OhMyRickMainView {
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .clipShape(Circle())
-                .rotationEffect(.init(degrees: portalAnimation))
                 .frame(width: size.width, height: size.width * 1.8)
                 .frame(maxWidth: .infinity, alignment: .center)
                 .offset(x: 70)

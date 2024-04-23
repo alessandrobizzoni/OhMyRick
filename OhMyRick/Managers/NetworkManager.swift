@@ -48,16 +48,21 @@ class NetworkManager: NetworkManagerProtocol {
             .eraseToAnyPublisher()
     }
     
-    func getFilteredCharacters(filterParameters: [String: String?]) -> AnyPublisher<Response, Error> {
-        var urlComponents = URLComponents(string: charactersURL)
-        urlComponents?.queryItems = filterParameters.map {
-            URLQueryItem(
-                name: $0.key,
-                value: $0.value
-            )
+    func getFilteredCharacters(filterParameters: [String: String?], nextPage: String? = nil) -> AnyPublisher<Response, Error> {
+        var nextURL = ""
+        var nextParametersURL = URLComponents(string: charactersURL)
+        if let nextPageUrl = nextPage {
+            nextURL = nextPageUrl
+        } else {
+            nextParametersURL?.queryItems = filterParameters.map {
+                URLQueryItem(
+                    name: $0.key,
+                    value: $0.value
+                )
+            }
         }
         
-        guard let url = urlComponents?.url else {
+        guard let url = !nextURL.isEmpty ? URL(string: nextURL) : nextParametersURL?.url else {
             return Fail(error: RMErrors.invalidURL).eraseToAnyPublisher()
         }
         
@@ -66,7 +71,6 @@ class NetworkManager: NetworkManagerProtocol {
             .decode(type: Response.self, decoder: JSONDecoder())
             .map {
                 print("[DEBUG] \($0)")
-//                self.cache.insert($0, forKey: String(contentsOf: url))
                 return $0
             }
             .eraseToAnyPublisher()
@@ -128,7 +132,7 @@ class NetworkManagerMock: NetworkManagerProtocol {
             .eraseToAnyPublisher()
     }
     
-    func getFilteredCharacters(filterParameters: [String : String?]) -> AnyPublisher<Response, Error> {
+    func getFilteredCharacters(filterParameters: [String : String?], nextPage: String?) -> AnyPublisher<Response, Error> {
         return Just(mockResponse)
             .setFailureType(to: Error.self)
             .eraseToAnyPublisher()

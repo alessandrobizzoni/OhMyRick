@@ -25,7 +25,7 @@ struct CharactersView: View {
                 ScrollView(.horizontal, showsIndicators: false) {
                     filterButtons
                 }
-                if viewModel.filteredCharacters.isEmpty {
+                if viewModel.characters.isEmpty {
                     emptyState
                 } else {
                     charactersList
@@ -35,7 +35,7 @@ struct CharactersView: View {
                         Spacer()
                         Button {
                             viewModel.currentPage -= 1
-                            viewModel.getAllCharacters(.prev)
+                            viewModel.updateCharactersList(.prev)
                         } label: {
                             Text("Previous")
                                 .font(
@@ -52,7 +52,7 @@ struct CharactersView: View {
                     if shouldShowNextPageButton {
                         Button {
                             viewModel.currentPage += 1
-                            viewModel.getAllCharacters(.next)
+                            viewModel.updateCharactersList(.next)
                         } label: {
                             Text("Next")
                                 .font(
@@ -73,6 +73,14 @@ struct CharactersView: View {
             .navigationTitle("🥒Characters")
             .navigationBarTitleDisplayMode(.automatic)
             .searchable(text: $searchName, prompt: "Search Name")
+            .onSubmit(of: .search) {
+                viewModel.filterParameters.updateValue(searchName, forKey: "name")
+            }
+            .onChange(of: searchName) { newValue in
+                if newValue.isEmpty {
+                    viewModel.filterParameters.removeValue(forKey: "name")
+                }
+            }
             .background(Color.primaryRick)
             .onAppear {
                 viewModel.getAllCharacters()
@@ -93,7 +101,7 @@ struct CharactersView: View {
 private extension CharactersView {
     var charactersList: some View {
         VStack(alignment: .leading) {
-            List(listToShow) { character in
+            List(viewModel.characters) { character in
                 CardCharacter(
                     title: character.name,
                     image: character.image
@@ -121,6 +129,7 @@ private extension CharactersView {
                         viewModel.filterParameters.updateValue(gender.rawValue, forKey: "gender")
                         viewModel.selectedGender = gender
                     }
+                    viewModel.currentPage = 1
                 } label: {
                     ZStack {
                         Rectangle()
@@ -168,15 +177,6 @@ private extension CharactersView {
 }
 // MARK: - Computed Properties
 private extension CharactersView {
-    var searchBarFilter: [Character] {
-        return viewModel.filteredCharacters.filter {
-            $0.name.localizedCaseInsensitiveContains(searchName)
-        }
-    }
-    
-    var listToShow: [Character] {
-        return searchName.isEmpty ? viewModel.filteredCharacters : searchBarFilter
-    }
     
     var shouldShowNextPageButton: Bool {
         return viewModel.currentPage != viewModel.responseInfo?.pages

@@ -12,5 +12,5 @@ protocol NetworkManagerProtocol {
     
     func getCharacters(nextPage: String?) -> AnyPublisher<Response, Error>
     
-    func getFilteredCharacters(filterParameters: [String: String?]) -> AnyPublisher<Response, Error>
+    func getFilteredCharacters(filterParameters: [String: String?], nextPage: String?) -> AnyPublisher<Response, Error>
 }

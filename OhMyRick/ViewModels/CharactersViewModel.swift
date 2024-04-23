@@ -20,31 +20,27 @@ class CharactersViewModel: ObservableObject {
     
     @Published var responseInfo: Info? = nil
     
-    @Published var characters: [Character] = [] {
+    @Published var characters: [Character] = []
+    
+    @Published var filterParameters: [String: String?] = [:] {
         didSet {
-            updateFilteredCharacters()
+            updateCharactersList()
         }
     }
     
-    @Published var filteredCharacters: [Character] = []
-    
-    @Published var filterParameters: [String: String?] = [
-        "name": nil,
-        "gender": nil
-    ] {
-        didSet {
-            getFilteredCharacters()
-        }
-    }
-    
-    @Published var selectedGender: CharacterGender? = nil {
-        didSet {
-            updateFilteredCharacters()
-        }
-    }
+    @Published var selectedGender: CharacterGender? = nil
     
     init(networkManager: NetworkManagerProtocol) {
         self.networkManager = networkManager
+    }
+    
+    func updateCharactersList(_ goToPage: CharacterPages? = nil) {
+        print("Filters \(filterParameters)")
+        if filterParameters["gender"] == nil, filterParameters["name"] == nil {
+            getAllCharacters(goToPage)
+        } else {
+            getFilteredCharacters(goToPage)
+        }
     }
     
     func getAllCharacters(_ goToPage: CharacterPages? = nil) {
@@ -76,8 +72,13 @@ class CharactersViewModel: ObservableObject {
         }
     }
     
-    func getFilteredCharacters() {
-        networkManager.getFilteredCharacters(filterParameters: filterParameters)
+    func getFilteredCharacters(_ goToPage: CharacterPages? = nil) {
+        var nextPage: String? = nil
+        if let nextPageURL = goToPage?.getPageUrl(infoResponse: responseInfo) {
+            nextPage = nextPageURL
+        }
+        
+        networkManager.getFilteredCharacters(filterParameters: filterParameters, nextPage: nextPage)
             .receive(on: DispatchQueue.main)
             .sink { completion in
                 switch completion {
@@ -90,16 +91,8 @@ class CharactersViewModel: ObservableObject {
                 }
             } receiveValue: { newValue in
                 self.responseInfo = newValue.info
-                self.filteredCharacters = newValue.results
+                self.characters = newValue.results
             }
             .store(in: &cancellable)
-    }
-    
-    private func updateFilteredCharacters() {
-        if let selectedGender = selectedGender {
-            filteredCharacters = characters.filter { $0.gender == selectedGender }
-        } else {
-            filteredCharacters = characters
-        }
     }
 }
