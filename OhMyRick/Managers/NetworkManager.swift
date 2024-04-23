@@ -99,7 +99,7 @@ class NetworkManager: NetworkManagerProtocol {
 
 class NetworkManagerMock: NetworkManagerProtocol {
     
-    let mockResponse: Response = .init(
+    var mockResponse: Response = .init(
         info: .init(
             count: 5,
             pages: 1,
@@ -126,15 +126,25 @@ class NetworkManagerMock: NetworkManagerProtocol {
         ]
     )
     
+    var shouldFailWithError = false
+    
     func getCharacters(nextPage: String?) -> AnyPublisher<Response, Error> {
-        return Just(mockResponse)
-            .setFailureType(to: Error.self)
-            .eraseToAnyPublisher()
+        if shouldFailWithError {
+            return Fail(error: NSError(domain: "TestErrorDomain", code: 123, userInfo: nil)).eraseToAnyPublisher()
+        } else {
+            return Just(mockResponse)
+                .setFailureType(to: Error.self)
+                .eraseToAnyPublisher()
+        }
     }
     
     func getFilteredCharacters(filterParameters: [String : String?], nextPage: String?) -> AnyPublisher<Response, Error> {
-        return Just(mockResponse)
-            .setFailureType(to: Error.self)
-            .eraseToAnyPublisher()
+        if shouldFailWithError {
+            return Fail(error: NSError(domain: "TestErrorDomain", code: 123, userInfo: nil)).eraseToAnyPublisher()
+        } else {
+            return Just(mockResponse)
+                .setFailureType(to: Error.self)
+                .eraseToAnyPublisher()
+        }
     }
 }

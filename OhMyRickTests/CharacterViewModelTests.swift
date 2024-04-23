@@ -12,54 +12,80 @@ import Combine
 class CharactersViewModelTests: XCTestCase {
     
     var viewModel: CharactersViewModel!
-    var mockNetworkManager: NetworkManagerMock!
-    var cancellables: Set<AnyCancellable> = []
-
-    override func setUpWithError() throws {
-        mockNetworkManager = NetworkManagerMock()
-        viewModel = CharactersViewModel(networkManager: mockNetworkManager)
+    var networkManager: NetworkManagerMock!
+    var cancellables: Set<AnyCancellable>!
+    
+    override func setUp() {
+        super.setUp()
+        networkManager = NetworkManagerMock()
+        viewModel = CharactersViewModel(networkManager: networkManager)
+        cancellables = Set<AnyCancellable>()
     }
-
-    override func tearDownWithError() throws {
+    
+    override func tearDown() {
         viewModel = nil
-        mockNetworkManager = nil
-        cancellables.removeAll()
+        networkManager = nil
+        cancellables = nil
+        super.tearDown()
     }
     
-    func testGetAllCharacters() {
-        // Given
-        let expectation = XCTestExpectation(description: "Characters fetched")
+    func testUpdateCharactersList_NoFilters() {
+        let expectedCharacters = [
+            Character(id: 1, name: "Rick", status: .alive, species: "Human", gender: .male, image: ""),
+            Character(id: 2, name: "Morty", status: .alive, species: "Human", gender: .male, image: "")
+        ]
+        networkManager = NetworkManagerMock()
+        networkManager.mockResponse = Response(info: Info(count: 2, pages: 1, next: nil, prev: nil), results: expectedCharacters)
+        viewModel = CharactersViewModel(networkManager: networkManager)
+        viewModel.filterParameters.removeAll()
         
-        // When
-        viewModel.getAllCharacters()
+        let expectation = XCTestExpectation(description: "Characters loaded")
         
-        // Then
-        viewModel.$characters
-            .sink { characters in
-                XCTAssertEqual(characters.count, 2)
-                expectation.fulfill()
-            }
-            .store(in: &cancellables)
+        viewModel.updateCharactersList()
         
-        wait(for: [expectation], timeout: 1)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            XCTAssertEqual(self.viewModel.characters, expectedCharacters)
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: 5.0)
     }
+
     
-    func testGetFilteredCharacters() {
-        // Given
-        let expectation = XCTestExpectation(description: "Filtered characters fetched")
-        
-        // When
+    func testUpdateCharactersList_WithFilters() {
+        let expectedFilteredCharacters = [
+            Character(id: 1, name: "Rick", status: .alive, species: "Human", gender: .male, image: ""),
+            Character(id: 2, name: "Morty", status: .alive, species: "Human", gender: .male, image: "")
+        ]
+        networkManager.mockResponse = Response(info: Info(count: 5, pages: 1, next: nil, prev: nil), results: expectedFilteredCharacters)
         viewModel.filterParameters = ["gender": "Male"]
-        viewModel.getFilteredCharacters()
         
-        // Then
-        viewModel.$characters
-            .sink { characters in
-                XCTAssertEqual(characters.count, 1)
-                expectation.fulfill()
-            }
-            .store(in: &cancellables)
+        let expectation = XCTestExpectation(description: "Characters loaded")
         
-        wait(for: [expectation], timeout: 1)
+        viewModel.updateCharactersList()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            XCTAssertEqual(self.viewModel.characters, expectedFilteredCharacters)
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: 5.0)
+    }
+    
+    func testUpdateCharactersList_NetworkError() {
+        let expectedErrorMessage = "The operation couldn’t be completed. (TestErrorDomain error 123.)"
+        networkManager.shouldFailWithError = true
+        
+        let expectation = XCTestExpectation(description: "Characters loaded")
+        
+        viewModel.updateCharactersList()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            XCTAssertTrue(self.viewModel.networkError)
+            XCTAssertEqual(self.viewModel.errorMessg, expectedErrorMessage)
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: 5.0)
     }
 }

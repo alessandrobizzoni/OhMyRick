@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Response: Decodable {
+struct Response: Decodable, Equatable {
     let info: Info
     let results: [Character]
 }

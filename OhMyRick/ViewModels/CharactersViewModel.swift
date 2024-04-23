@@ -14,7 +14,9 @@ class CharactersViewModel: ObservableObject {
     
     var cancellable: Set<AnyCancellable> = Set<AnyCancellable>()
     
-    var networkError: Bool = false
+    @Published var networkError: Bool = false
+    
+    @Published var errorMessg: String = ""
     
     @Published var currentPage: Int = 1
     
@@ -63,10 +65,12 @@ class CharactersViewModel: ObservableObject {
                     case .failure(let error):
                         print("[DEBUG ERROR] \(error.localizedDescription)")
                         self.networkError = true
+                        self.errorMessg = error.localizedDescription
                     }
                 } receiveValue: { newValue in
                     self.responseInfo = newValue.info
                     self.characters = newValue.results
+                    self.networkError = false
                 }
                 .store(in: &cancellable)
         }
@@ -88,10 +92,12 @@ class CharactersViewModel: ObservableObject {
                 case .failure(let error):
                     print("[DEBUG ERROR] \(error.localizedDescription)")
                     self.networkError = true
+                    self.errorMessg = error.localizedDescription
                 }
             } receiveValue: { newValue in
                 self.responseInfo = newValue.info
                 self.characters = newValue.results
+                self.networkError = false
             }
             .store(in: &cancellable)
     }

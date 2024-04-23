@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		9268C7922BD7CF0400BCD3F6 /* NetworkManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9268C7912BD7CF0400BCD3F6 /* NetworkManagerProtocol.swift */; };
+		9268C79C2BD80FD100BCD3F6 /* CharacterStatusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9268C79B2BD80FD100BCD3F6 /* CharacterStatusTests.swift */; };
+		9268C79E2BD8104C00BCD3F6 /* CacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9268C79D2BD8104C00BCD3F6 /* CacheTests.swift */; };
+		9268C7A02BD81E4500BCD3F6 /* CharacterPagesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9268C79F2BD81E4500BCD3F6 /* CharacterPagesTests.swift */; };
+		9268C7A42BD81F5100BCD3F6 /* CardCharacterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9268C7A32BD81F5100BCD3F6 /* CardCharacterTests.swift */; };
 		9276FE882BD403F7001B4EA3 /* Info.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9276FE872BD403F7001B4EA3 /* Info.swift */; };
 		9276FE8A2BD4137A001B4EA3 /* CharacterPages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9276FE892BD4137A001B4EA3 /* CharacterPages.swift */; };
 		9276FE8C2BD565E1001B4EA3 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9276FE8B2BD565E1001B4EA3 /* Cache.swift */; };
@@ -17,7 +21,6 @@
 		92E5CE9E2BCFA1D2002103C3 /* OhMyRickMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E5CE9D2BCFA1D2002103C3 /* OhMyRickMainView.swift */; };
 		92E5CEA02BCFA1D3002103C3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92E5CE9F2BCFA1D3002103C3 /* Assets.xcassets */; };
 		92E5CEA32BCFA1D3002103C3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92E5CEA22BCFA1D3002103C3 /* Preview Assets.xcassets */; };
-		92E5CEAD2BCFA1D3002103C3 /* OhMyRickTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E5CEAC2BCFA1D3002103C3 /* OhMyRickTests.swift */; };
 		92E5CEB72BCFA1D3002103C3 /* OhMyRickUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E5CEB62BCFA1D3002103C3 /* OhMyRickUITests.swift */; };
 		92E5CEB92BCFA1D3002103C3 /* OhMyRickUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E5CEB82BCFA1D3002103C3 /* OhMyRickUITestsLaunchTests.swift */; };
 		92E5CEC72BCFA751002103C3 /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E5CEC62BCFA751002103C3 /* Character.swift */; };
@@ -53,6 +56,10 @@
 
 /* Begin PBXFileReference section */
 		9268C7912BD7CF0400BCD3F6 /* NetworkManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManagerProtocol.swift; sourceTree = "<group>"; };
+		9268C79B2BD80FD100BCD3F6 /* CharacterStatusTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharacterStatusTests.swift; sourceTree = "<group>"; };
+		9268C79D2BD8104C00BCD3F6 /* CacheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheTests.swift; sourceTree = "<group>"; };
+		9268C79F2BD81E4500BCD3F6 /* CharacterPagesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterPagesTests.swift; sourceTree = "<group>"; };
+		9268C7A32BD81F5100BCD3F6 /* CardCharacterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCharacterTests.swift; sourceTree = "<group>"; };
 		9276FE872BD403F7001B4EA3 /* Info.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Info.swift; sourceTree = "<group>"; };
 		9276FE892BD4137A001B4EA3 /* CharacterPages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterPages.swift; sourceTree = "<group>"; };
 		9276FE8B2BD565E1001B4EA3 /* Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
@@ -64,7 +71,6 @@
 		92E5CE9F2BCFA1D3002103C3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		92E5CEA22BCFA1D3002103C3 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		92E5CEA82BCFA1D3002103C3 /* OhMyRickTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OhMyRickTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		92E5CEAC2BCFA1D3002103C3 /* OhMyRickTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OhMyRickTests.swift; sourceTree = "<group>"; };
 		92E5CEB22BCFA1D3002103C3 /* OhMyRickUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OhMyRickUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		92E5CEB62BCFA1D3002103C3 /* OhMyRickUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OhMyRickUITests.swift; sourceTree = "<group>"; };
 		92E5CEB82BCFA1D3002103C3 /* OhMyRickUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OhMyRickUITestsLaunchTests.swift; sourceTree = "<group>"; };
@@ -154,8 +160,11 @@
 		92E5CEAB2BCFA1D3002103C3 /* OhMyRickTests */ = {
 			isa = PBXGroup;
 			children = (
-				92E5CEAC2BCFA1D3002103C3 /* OhMyRickTests.swift */,
+				9268C79B2BD80FD100BCD3F6 /* CharacterStatusTests.swift */,
 				9276FE8F2BD58631001B4EA3 /* CharacterViewModelTests.swift */,
+				9268C79D2BD8104C00BCD3F6 /* CacheTests.swift */,
+				9268C79F2BD81E4500BCD3F6 /* CharacterPagesTests.swift */,
+				9268C7A32BD81F5100BCD3F6 /* CardCharacterTests.swift */,
 			);
 			path = OhMyRickTests;
 			sourceTree = "<group>";
@@ -401,8 +410,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9268C7A02BD81E4500BCD3F6 /* CharacterPagesTests.swift in Sources */,
+				9268C7A42BD81F5100BCD3F6 /* CardCharacterTests.swift in Sources */,
 				9276FE902BD58631001B4EA3 /* CharacterViewModelTests.swift in Sources */,
-				92E5CEAD2BCFA1D3002103C3 /* OhMyRickTests.swift in Sources */,
+				9268C79C2BD80FD100BCD3F6 /* CharacterStatusTests.swift in Sources */,
+				9268C79E2BD8104C00BCD3F6 /* CacheTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

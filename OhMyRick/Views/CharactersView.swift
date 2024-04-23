@@ -81,9 +81,15 @@ struct CharactersView: View {
                     viewModel.filterParameters.removeValue(forKey: "name")
                 }
             }
-            .background(Color.primaryRick)
             .onAppear {
                 viewModel.getAllCharacters()
+            }
+            .alert(isPresented: $viewModel.networkError) {
+                Alert(
+                    title: Text("Error"),
+                    message: Text(viewModel.errorMessg),
+                    dismissButton: .default(Text("OK"))
+                )
             }
             .blur(radius: showDetail ? 10 : 0)
             .disabled(showDetail)
