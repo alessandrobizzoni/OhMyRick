@@ -13,6 +13,10 @@ enum Page: Hashable {
     case charactersList
 }
 
+enum AppEnvironment {
+case live, sandbox
+}
+
 class Coordinator: ObservableObject {
     
     @Published var path = NavigationPath()
@@ -27,7 +31,22 @@ class Coordinator: ObservableObject {
         case .ohMyRickMainView:
             OhMyRickMainView()
         case .charactersList:
-            CharactersView()
+            CharactersView(
+                viewModel: .init(
+                    networkManager: Managers.getNetworkManager(for: .live)
+                )
+            )
+        }
+    }
+}
+
+class Managers {
+    static func getNetworkManager(for environment: AppEnvironment)  -> NetworkManagerProtocol {
+        switch environment {
+        case .live:
+            return NetworkManager()
+        case .sandbox:
+            return NetworkManagerMock()
         }
     }
 }

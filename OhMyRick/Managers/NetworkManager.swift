@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import Combine
 
-class NetworkManager {
+class NetworkManager: NetworkManagerProtocol {
     
     private var cache = Cache<String, Response>()
     private var imageCache = Cache<String, UIImage>()
@@ -90,5 +90,47 @@ class NetworkManager {
                 }
                 .eraseToAnyPublisher()
         }
+    }
+}
+
+class NetworkManagerMock: NetworkManagerProtocol {
+    
+    let mockResponse: Response = .init(
+        info: .init(
+            count: 5,
+            pages: 1,
+            next: nil,
+            prev: nil
+        ),
+        results: [
+            .init(
+                id: 1,
+                name: "Rick",
+                status: .alive,
+                species: "Human",
+                gender: .male,
+                image: ""
+            ),
+            .init(
+                id: 2,
+                name: "Morty",
+                status: .alive,
+                species: "Human",
+                gender: .male,
+                image: ""
+            )
+        ]
+    )
+    
+    func getCharacters(nextPage: String?) -> AnyPublisher<Response, Error> {
+        return Just(mockResponse)
+            .setFailureType(to: Error.self)
+            .eraseToAnyPublisher()
+    }
+    
+    func getFilteredCharacters(filterParameters: [String : String?]) -> AnyPublisher<Response, Error> {
+        return Just(mockResponse)
+            .setFailureType(to: Error.self)
+            .eraseToAnyPublisher()
     }
 }

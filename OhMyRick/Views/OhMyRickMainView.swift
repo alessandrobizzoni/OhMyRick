@@ -54,6 +54,11 @@ struct OhMyRickMainView: View {
                 
                 portalImage
                     .frame(height: 320)
+                    .onAppear {
+                        withAnimation(.easeInOut(duration: 10)) {
+                            portalAnimation += 360
+                        }
+                    }
             }
         }
         .padding()
@@ -65,11 +70,6 @@ struct OhMyRickMainView: View {
                 endPoint: .bottom
             )
         )
-        .onAppear {
-            withAnimation(.easeInOut(duration: 10)) {
-                portalAnimation += 360
-            }
-        }
     }
 }
 

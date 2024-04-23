@@ -10,7 +10,7 @@ import Combine
 
 class CharactersViewModel: ObservableObject {
     
-    var networkManager = NetworkManager()
+    var networkManager: NetworkManagerProtocol
     
     var cancellable: Set<AnyCancellable> = Set<AnyCancellable>()
     
@@ -41,6 +41,10 @@ class CharactersViewModel: ObservableObject {
         didSet {
             updateFilteredCharacters()
         }
+    }
+    
+    init(networkManager: NetworkManagerProtocol) {
+        self.networkManager = networkManager
     }
     
     func getAllCharacters(_ goToPage: CharacterPages? = nil) {

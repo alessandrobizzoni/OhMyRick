@@ -11,7 +11,7 @@ struct CharactersView: View {
     
     @EnvironmentObject private var coordinator: Coordinator
     
-    @StateObject var viewModel: CharactersViewModel = CharactersViewModel()
+    @StateObject var viewModel: CharactersViewModel
     
     @State private var searchName: String = ""
     
@@ -188,5 +188,9 @@ private extension CharactersView {
 }
 
 #Preview {
-    CharactersView()
+    CharactersView(
+        viewModel: .init(
+            networkManager: Managers.getNetworkManager(for: .sandbox)
+        )
+    )
 }
