@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Cache<Key: Hashable, Value> {
+class Cache<Key: Hashable, Value>: CacheProtocol {
     private var storage: [Key: Value] = [:]
     private let queue = DispatchQueue(label: "com.ohMyRick.cacheQueue")
 

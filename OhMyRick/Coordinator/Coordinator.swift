@@ -33,7 +33,7 @@ class Coordinator: ObservableObject {
         case .charactersList:
             CharactersView(
                 viewModel: .init(
-                    networkManager: Managers.getNetworkManager(for: .live)
+                    omrInteractor: Managers.getInteractor(for: .live)
                 )
             )
         }
@@ -41,12 +41,12 @@ class Coordinator: ObservableObject {
 }
 
 class Managers {
-    static func getNetworkManager(for environment: AppEnvironment)  -> NetworkManagerProtocol {
+    static func getInteractor(for environment: AppEnvironment)  -> OMRInteractorProtocol {
         switch environment {
         case .live:
-            return NetworkManager()
+            return OMRInteractor()
         case .sandbox:
-            return NetworkManagerMock()
+            return OMRInteractorMock()
         }
     }
 }

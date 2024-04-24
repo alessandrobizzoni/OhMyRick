@@ -12,31 +12,31 @@ import Combine
 class CharactersViewModelTests: XCTestCase {
     
     var viewModel: CharactersViewModel!
-    var networkManager: NetworkManagerMock!
+    var omrInteractor: OMRInteractorMock!
     var cancellables: Set<AnyCancellable>!
     
     override func setUp() {
         super.setUp()
-        networkManager = NetworkManagerMock()
-        viewModel = CharactersViewModel(networkManager: networkManager)
+        omrInteractor = OMRInteractorMock()
+        viewModel = CharactersViewModel(omrInteractor: omrInteractor)
         cancellables = Set<AnyCancellable>()
     }
     
     override func tearDown() {
         viewModel = nil
-        networkManager = nil
+        omrInteractor = nil
         cancellables = nil
         super.tearDown()
     }
     
     func testUpdateCharactersList_NoFilters() {
         let expectedCharacters = [
-            Character(id: 1, name: "Rick", status: .alive, species: "Human", gender: .male, image: ""),
-            Character(id: 2, name: "Morty", status: .alive, species: "Human", gender: .male, image: "")
+            BSCharacter(id: 1, name: "Rick", status: .alive, species: "Human", gender: .male, image: ""),
+            BSCharacter(id: 2, name: "Morty", status: .alive, species: "Human", gender: .male, image: "")
         ]
-        networkManager = NetworkManagerMock()
-        networkManager.mockResponse = Response(info: Info(count: 2, pages: 1, next: nil, prev: nil), results: expectedCharacters)
-        viewModel = CharactersViewModel(networkManager: networkManager)
+        omrInteractor = OMRInteractorMock()
+        omrInteractor.mockResponse = BSResponse(info: BSInfo(count: 2, pages: 1, next: nil, prev: nil), results: expectedCharacters)
+        viewModel = CharactersViewModel(omrInteractor: omrInteractor)
         viewModel.filterParameters.removeAll()
         
         let expectation = XCTestExpectation(description: "Characters loaded")
@@ -54,10 +54,10 @@ class CharactersViewModelTests: XCTestCase {
     
     func testUpdateCharactersList_WithFilters() {
         let expectedFilteredCharacters = [
-            Character(id: 1, name: "Rick", status: .alive, species: "Human", gender: .male, image: ""),
-            Character(id: 2, name: "Morty", status: .alive, species: "Human", gender: .male, image: "")
+            BSCharacter(id: 1, name: "Rick", status: .alive, species: "Human", gender: .male, image: ""),
+            BSCharacter(id: 2, name: "Morty", status: .alive, species: "Human", gender: .male, image: "")
         ]
-        networkManager.mockResponse = Response(info: Info(count: 5, pages: 1, next: nil, prev: nil), results: expectedFilteredCharacters)
+        omrInteractor.mockResponse = BSResponse(info: BSInfo(count: 5, pages: 1, next: nil, prev: nil), results: expectedFilteredCharacters)
         viewModel.filterParameters = ["gender": "Male"]
         
         let expectation = XCTestExpectation(description: "Characters loaded")
@@ -74,7 +74,7 @@ class CharactersViewModelTests: XCTestCase {
     
     func testUpdateCharactersList_NetworkError() {
         let expectedErrorMessage = "The operation couldn’t be completed. (TestErrorDomain error 123.)"
-        networkManager.shouldFailWithError = true
+        omrInteractor.shouldFailWithError = true
         
         let expectation = XCTestExpectation(description: "Characters loaded")
         

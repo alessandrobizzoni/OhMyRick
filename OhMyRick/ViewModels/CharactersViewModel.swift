@@ -10,7 +10,7 @@ import Combine
 
 class CharactersViewModel: ObservableObject {
     
-    var networkManager: NetworkManagerProtocol
+    var omrInteractor: OMRInteractorProtocol
     
     var cancellable: Set<AnyCancellable> = Set<AnyCancellable>()
     
@@ -20,9 +20,9 @@ class CharactersViewModel: ObservableObject {
     
     @Published var currentPage: Int = 1
     
-    @Published var responseInfo: Info? = nil
+    @Published var responseInfo: BSInfo? = nil
     
-    @Published var characters: [Character] = []
+    @Published var characters: [BSCharacter] = []
     
     @Published var filterParameters: [String: String?] = [:] {
         didSet {
@@ -32,8 +32,8 @@ class CharactersViewModel: ObservableObject {
     
     @Published var selectedGender: CharacterGender? = nil
     
-    init(networkManager: NetworkManagerProtocol) {
-        self.networkManager = networkManager
+    init(omrInteractor: OMRInteractorProtocol) {
+        self.omrInteractor = omrInteractor
     }
     
     func updateCharactersList(_ goToPage: CharacterPages? = nil) {
@@ -51,29 +51,24 @@ class CharactersViewModel: ObservableObject {
             nextPage = nextPageURL
         }
         
-        if let cachedValue = UserDefaults.standard.value(forKey: nextPage ?? "") as? Response {
-            self.responseInfo = cachedValue.info
-            self.characters = cachedValue.results
-        } else {
-            networkManager.getCharacters(nextPage: nextPage)
-                .receive(on: DispatchQueue.main)
-                .sink { completion in
-                    switch completion {
-                    case .finished:
-                        print("Request done")
-                        
-                    case .failure(let error):
-                        print("[DEBUG ERROR] \(error.localizedDescription)")
-                        self.networkError = true
-                        self.errorMessg = error.localizedDescription
-                    }
-                } receiveValue: { newValue in
-                    self.responseInfo = newValue.info
-                    self.characters = newValue.results
-                    self.networkError = false
+        omrInteractor.getCharacters(nextPage: nextPage)
+            .receive(on: DispatchQueue.main)
+            .sink { completion in
+                switch completion {
+                case .finished:
+                    print("Request done")
+                    
+                case .failure(let error):
+                    print("[DEBUG ERROR] \(error.localizedDescription)")
+                    self.networkError = true
+                    self.errorMessg = error.localizedDescription
                 }
-                .store(in: &cancellable)
-        }
+            } receiveValue: { newValue in
+                self.responseInfo = newValue.info
+                self.characters = newValue.results
+                self.networkError = false
+            }
+            .store(in: &cancellable)
     }
     
     func getFilteredCharacters(_ goToPage: CharacterPages? = nil) {
@@ -82,7 +77,7 @@ class CharactersViewModel: ObservableObject {
             nextPage = nextPageURL
         }
         
-        networkManager.getFilteredCharacters(filterParameters: filterParameters, nextPage: nextPage)
+        omrInteractor.getFilteredCharacters(filterParameters: filterParameters, nextPage: nextPage)
             .receive(on: DispatchQueue.main)
             .sink { completion in
                 switch completion {

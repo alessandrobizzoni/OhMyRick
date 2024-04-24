@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Info: Decodable, Equatable {
+struct BSInfo: Decodable, Equatable {
     let count: Int
     let pages: Int
     let next: String?

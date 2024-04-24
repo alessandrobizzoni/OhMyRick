@@ -17,7 +17,7 @@ struct CharactersView: View {
     
     @State private var showDetail: Bool = false
     
-    @State private var selectedCharacter: Character?
+    @State private var selectedCharacter: BSCharacter?
     
     var body: some View {
         ZStack {
@@ -30,44 +30,7 @@ struct CharactersView: View {
                 } else {
                     charactersList
                 }
-                HStack {
-                    if shouldShowPrevPageButton {
-                        Spacer()
-                        Button {
-                            viewModel.currentPage -= 1
-                            viewModel.updateCharactersList(.prev)
-                        } label: {
-                            Text("Previous")
-                                .font(
-                                    .system(
-                                        size: 20,
-                                        weight: .bold,
-                                        design: .rounded
-                                    )
-                                )
-                                .foregroundStyle(.secondaryRick)
-                        }
-                    }
-                    Spacer()
-                    if shouldShowNextPageButton {
-                        Button {
-                            viewModel.currentPage += 1
-                            viewModel.updateCharactersList(.next)
-                        } label: {
-                            Text("Next")
-                                .font(
-                                    .system(
-                                        size: 20,
-                                        weight: .bold,
-                                        design: .rounded
-                                    )
-                                )
-                                .foregroundStyle(.secondaryRick)
-                        }
-                        Spacer()
-                    }
-                }
-                .padding()
+                navigationPagesButtons
             }
             .background(Color.primaryRick)
             .navigationTitle("🥒Characters")
@@ -180,6 +143,47 @@ private extension CharactersView {
         }
         .frame(maxHeight: .infinity)
     }
+    
+    var navigationPagesButtons: some View {
+        HStack {
+            if shouldShowPrevPageButton {
+                Spacer()
+                Button {
+                    viewModel.currentPage -= 1
+                    viewModel.updateCharactersList(.prev)
+                } label: {
+                    Text("Previous")
+                        .font(
+                            .system(
+                                size: 20,
+                                weight: .bold,
+                                design: .rounded
+                            )
+                        )
+                        .foregroundStyle(.secondaryRick)
+                }
+            }
+            Spacer()
+            if shouldShowNextPageButton {
+                Button {
+                    viewModel.currentPage += 1
+                    viewModel.updateCharactersList(.next)
+                } label: {
+                    Text("Next")
+                        .font(
+                            .system(
+                                size: 20,
+                                weight: .bold,
+                                design: .rounded
+                            )
+                        )
+                        .foregroundStyle(.secondaryRick)
+                }
+                Spacer()
+            }
+        }
+        .padding()
+    }
 }
 // MARK: - Computed Properties
 private extension CharactersView {
@@ -196,7 +200,7 @@ private extension CharactersView {
 #Preview {
     CharactersView(
         viewModel: .init(
-            networkManager: Managers.getNetworkManager(for: .sandbox)
+            omrInteractor: Managers.getInteractor(for: .sandbox)
         )
     )
 }

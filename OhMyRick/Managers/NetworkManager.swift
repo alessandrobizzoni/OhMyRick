@@ -11,20 +11,15 @@ import Combine
 
 class NetworkManager: NetworkManagerProtocol {
     
-    private var cache = Cache<String, Response>()
+    private var cache = Cache<String, DataResponse>()
     private var imageCache = Cache<String, UIImage>()
     
     static let baseURL = "https://rickandmortyapi.com/api/"
     
     private let charactersURL = baseURL + "character"
     
-    func getCharacters(nextPage: String? = nil) -> AnyPublisher<Response, Error> {
-        var nextUrl: String = ""
-        if let nextPageUrl = nextPage {
-            nextUrl = nextPageUrl
-        } else {
-            nextUrl = charactersURL
-        }
+    func getCharacters(nextPage: String = "") -> AnyPublisher<DataResponse, Error> {
+        let nextUrl: String = !nextPage.isEmpty ? nextPage : charactersURL
         
         if let cachedCharacters = cache.value(forKey: nextUrl) {
             print("[LOG] Cache \(nextUrl) returned")
@@ -39,7 +34,7 @@ class NetworkManager: NetworkManagerProtocol {
         
         return URLSession.shared.dataTaskPublisher(for: url)
             .map(\.data)
-            .decode(type: Response.self, decoder: JSONDecoder())
+            .decode(type: DataResponse.self, decoder: JSONDecoder())
             .map {
                 print("[DEBUG] \($0)")
                 self.cache.insert($0, forKey: nextUrl)
@@ -48,27 +43,23 @@ class NetworkManager: NetworkManagerProtocol {
             .eraseToAnyPublisher()
     }
     
-    func getFilteredCharacters(filterParameters: [String: String?], nextPage: String? = nil) -> AnyPublisher<Response, Error> {
-        var nextURL = ""
+    func getFilteredCharacters(filterParameters: [String: String?], nextPage: String = "") -> AnyPublisher<DataResponse, Error> {
         var nextParametersURL = URLComponents(string: charactersURL)
-        if let nextPageUrl = nextPage {
-            nextURL = nextPageUrl
-        } else {
-            nextParametersURL?.queryItems = filterParameters.map {
-                URLQueryItem(
-                    name: $0.key,
-                    value: $0.value
-                )
-            }
+        nextParametersURL?.queryItems = filterParameters.map {
+            URLQueryItem(
+                name: $0.key,
+                value: $0.value
+            )
         }
+        let nextURL: URLComponents? = !nextPage.isEmpty ? URLComponents(string: nextPage) : nextParametersURL
         
-        guard let url = !nextURL.isEmpty ? URL(string: nextURL) : nextParametersURL?.url else {
+        guard let url = nextURL?.url else {
             return Fail(error: RMErrors.invalidURL).eraseToAnyPublisher()
         }
         
         return URLSession.shared.dataTaskPublisher(for: url)
             .map(\.data)
-            .decode(type: Response.self, decoder: JSONDecoder())
+            .decode(type: DataResponse.self, decoder: JSONDecoder())
             .map {
                 print("[DEBUG] \($0)")
                 return $0
@@ -92,58 +83,6 @@ class NetworkManager: NetworkManagerProtocol {
                     }
                     return image
                 }
-                .eraseToAnyPublisher()
-        }
-    }
-}
-
-class NetworkManagerMock: NetworkManagerProtocol {
-    
-    var mockResponse: Response = .init(
-        info: .init(
-            count: 5,
-            pages: 1,
-            next: nil,
-            prev: nil
-        ),
-        results: [
-            .init(
-                id: 1,
-                name: "Rick",
-                status: .alive,
-                species: "Human",
-                gender: .male,
-                image: ""
-            ),
-            .init(
-                id: 2,
-                name: "Morty",
-                status: .alive,
-                species: "Human",
-                gender: .male,
-                image: ""
-            )
-        ]
-    )
-    
-    var shouldFailWithError = false
-    
-    func getCharacters(nextPage: String?) -> AnyPublisher<Response, Error> {
-        if shouldFailWithError {
-            return Fail(error: NSError(domain: "TestErrorDomain", code: 123, userInfo: nil)).eraseToAnyPublisher()
-        } else {
-            return Just(mockResponse)
-                .setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
-        }
-    }
-    
-    func getFilteredCharacters(filterParameters: [String : String?], nextPage: String?) -> AnyPublisher<Response, Error> {
-        if shouldFailWithError {
-            return Fail(error: NSError(domain: "TestErrorDomain", code: 123, userInfo: nil)).eraseToAnyPublisher()
-        } else {
-            return Just(mockResponse)
-                .setFailureType(to: Error.self)
                 .eraseToAnyPublisher()
         }
     }

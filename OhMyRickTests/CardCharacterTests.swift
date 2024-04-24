@@ -12,14 +12,11 @@ import SwiftUI
 class CardCharacterTests: XCTestCase {
     
     func testCardCharacterView() {
-        // Given
         let title = "Rick Sanchez"
         let image = "https://example.com/rick.jpg"
         
-        // When
         let cardCharacterView = CardCharacter(title: title, image: image)
         
-        // Then
         XCTAssertNotNil(cardCharacterView)
     }
 }

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CharacterDetailView: View {
     
-    let character: Character
+    let character: BSCharacter
     
     @Binding var isShowingDetail: Bool
     

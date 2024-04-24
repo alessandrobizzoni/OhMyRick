@@ -10,7 +10,7 @@ import Combine
 
 protocol NetworkManagerProtocol {
     
-    func getCharacters(nextPage: String?) -> AnyPublisher<Response, Error>
+    func getCharacters(nextPage: String) -> AnyPublisher<DataResponse, Error>
     
-    func getFilteredCharacters(filterParameters: [String: String?], nextPage: String?) -> AnyPublisher<Response, Error>
+    func getFilteredCharacters(filterParameters: [String: String?], nextPage: String) -> AnyPublisher<DataResponse, Error>
 }
