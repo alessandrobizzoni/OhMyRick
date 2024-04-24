@@ -1,16 +1,16 @@
 //
-//  OMRInteractorMock.swift
+//  NetworkMock.swift
 //  OhMyRick
 //
-//  Created by Alessandro Bizzoni on 24/4/24.
+//  Created by Alessandro Bizzoni on 22/4/24.
 //
 
 import Foundation
 import Combine
 
-class OMRInteractorMock: OMRInteractorProtocol {
+class NetworkMock: NetworkProtocol {
     
-    var mockResponse: BSResponse = .init(
+    var mockResponse: DataResponse = .init(
         info: .init(
             count: 5,
             pages: 1,
@@ -39,7 +39,7 @@ class OMRInteractorMock: OMRInteractorProtocol {
     
     var shouldFailWithError = false
     
-    func getCharacters(nextPage: String?) -> AnyPublisher<BSResponse, Error> {
+    func getCharacters(nextPage: String) -> AnyPublisher<DataResponse, Error> {
         if shouldFailWithError {
             return Fail(error: NSError(domain: "TestErrorDomain", code: 123, userInfo: nil)).eraseToAnyPublisher()
         } else {
@@ -49,7 +49,7 @@ class OMRInteractorMock: OMRInteractorProtocol {
         }
     }
     
-    func getFilteredCharacters(filterParameters: [String : String?], nextPage: String?) -> AnyPublisher<BSResponse, Error> {
+    func getFilteredCharacters(filterParameters: [String : String?], nextPage: String) -> AnyPublisher<DataResponse, Error> {
         if shouldFailWithError {
             return Fail(error: NSError(domain: "TestErrorDomain", code: 123, userInfo: nil)).eraseToAnyPublisher()
         } else {

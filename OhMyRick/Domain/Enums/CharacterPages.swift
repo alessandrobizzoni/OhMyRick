@@ -11,7 +11,7 @@ enum CharacterPages {
     case next
     case prev
     
-    func getPageUrl(infoResponse: BSInfo?) -> String? {
+    func getPageUrl(infoResponse: DomainPageInfo?) -> String? {
         switch self {
         case .next:
             return infoResponse?.next

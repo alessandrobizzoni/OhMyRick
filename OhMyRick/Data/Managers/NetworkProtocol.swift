@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-protocol NetworkManagerProtocol {
+protocol NetworkProtocol {
     
     func getCharacters(nextPage: String) -> AnyPublisher<DataResponse, Error>
     

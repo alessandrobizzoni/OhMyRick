@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct BSCharacter: Decodable, Identifiable, Equatable {
+struct DomainCharacter: Codable, Identifiable, Equatable {
     let id: Int
     let name: String
     let status: CharacterStatus

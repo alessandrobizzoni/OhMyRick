@@ -17,7 +17,7 @@ class OMRInteractorTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        interactor = OMRInteractor(networkManager: NetworkManagerMock())
+        interactor = OMRInteractor(networkManager: NetworkMock() as! NetworkProtocol, cache: Cache<String, DomainContent>(), imageCache: Cache<String, UIImage>())
         cancellables = Set<AnyCancellable>()
     }
     

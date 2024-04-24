@@ -11,13 +11,11 @@ import Combine
 
 struct OMRAsyncImage: View {
     @ObservedObject private var imageLoader: ImageLoader
-    private let placeholder: Image
-
-    init(url: URL, placeholder: Image = Image(.portal)) {
+    
+    init(url: URL) {
         imageLoader = ImageLoader(url: url)
-        self.placeholder = placeholder
     }
-
+    
     var body: some View {
         Group {
             if let uiImage = imageLoader.image {
@@ -29,13 +27,8 @@ struct OMRAsyncImage: View {
                         RoundedRectangle(cornerRadius: 25)
                     )
             } else {
-                placeholder
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
+                ProgressView()
                     .frame(width: 80, height: 80)
-                    .clipShape(
-                        RoundedRectangle(cornerRadius: 25)
-                    )
             }
         }
     }
@@ -44,7 +37,7 @@ struct OMRAsyncImage: View {
 class ImageLoader: ObservableObject {
     @Published var image: UIImage?
     private var cancellable: AnyCancellable?
-
+    
     init(url: URL) {
         cancellable = URLSession.shared.dataTaskPublisher(for: url)
             .map { UIImage(data: $0.data) }

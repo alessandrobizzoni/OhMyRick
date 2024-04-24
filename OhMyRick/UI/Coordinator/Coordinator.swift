@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import UIKit
 
 enum Page: Hashable {
     case ohMyRickMainView
@@ -42,11 +43,13 @@ class Coordinator: ObservableObject {
 
 class Managers {
     static func getInteractor(for environment: AppEnvironment)  -> OMRInteractorProtocol {
+        var networking: NetworkProtocol
         switch environment {
         case .live:
-            return OMRInteractor(networkManager: NetworkManager())
+            networking = Network()
         case .sandbox:
-            return OMRInteractorMock()
+            networking = NetworkMock()
         }
+        return OMRInteractor(networkManager: networking, cache: Cache<String, DomainContent>(), imageCache: Cache<String, UIImage>())
     }
 }

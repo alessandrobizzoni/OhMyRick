@@ -11,7 +11,7 @@ import XCTest
 class CharacterPagesTests: XCTestCase {
     
     func testGetPageUrl_NextPage() {
-        let infoResponse = BSInfo(count: 10, pages: 2, next: "https://example.com/page=2", prev: "https://example.com/page=1")
+        let infoResponse = DomainPageInfo(pages: 2, next: "https://example.com/page=2", prev: "https://example.com/page=1")
         
         let nextPageUrl = CharacterPages.next.getPageUrl(infoResponse: infoResponse)
         
@@ -19,7 +19,7 @@ class CharacterPagesTests: XCTestCase {
     }
     
     func testGetPageUrl_PrevPage() {
-        let infoResponse = BSInfo(count: 10, pages: 2, next: "https://example.com/page=2", prev: "https://example.com/page=1")
+        let infoResponse = DomainPageInfo(pages: 2, next: "https://example.com/page=2", prev: "https://example.com/page=1")
         
         let prevPageUrl = CharacterPages.prev.getPageUrl(infoResponse: infoResponse)
         
@@ -27,7 +27,7 @@ class CharacterPagesTests: XCTestCase {
     }
     
     func testGetPageUrl_NoInfoResponse() {
-        let infoResponse: BSInfo? = nil
+        let infoResponse: DomainPageInfo? = nil
         
         let nextPageUrl = CharacterPages.next.getPageUrl(infoResponse: infoResponse)
         let prevPageUrl = CharacterPages.prev.getPageUrl(infoResponse: infoResponse)
@@ -37,7 +37,7 @@ class CharacterPagesTests: XCTestCase {
     }
     
     func testGetPageUrl_MissingPage() {
-        let infoResponse = BSInfo(count: 10, pages: 2, next: nil, prev: nil)
+        let infoResponse = DomainPageInfo(pages: 2, next: nil, prev: nil)
         
         let nextPageUrl = CharacterPages.next.getPageUrl(infoResponse: infoResponse)
         let prevPageUrl = CharacterPages.prev.getPageUrl(infoResponse: infoResponse)

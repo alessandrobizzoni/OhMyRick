@@ -9,10 +9,7 @@ import Foundation
 import UIKit
 import Combine
 
-class NetworkManager: NetworkManagerProtocol {
-    
-    private var cache = Cache<String, DataResponse>()
-    private var imageCache = Cache<String, UIImage>()
+class Network: NetworkProtocol {
     
     static let baseURL = "https://rickandmortyapi.com/api/"
     
@@ -20,13 +17,6 @@ class NetworkManager: NetworkManagerProtocol {
     
     func getCharacters(nextPage: String = "") -> AnyPublisher<DataResponse, Error> {
         let nextUrl: String = !nextPage.isEmpty ? nextPage : charactersURL
-        
-        if let cachedCharacters = cache.value(forKey: nextUrl) {
-            print("[LOG] Cache \(nextUrl) returned")
-            return Just(cachedCharacters)
-                .setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
-        }
         
         guard let url = URL(string: nextUrl) else {
             return Fail(error: RMErrors.invalidURL).eraseToAnyPublisher()
@@ -37,7 +27,7 @@ class NetworkManager: NetworkManagerProtocol {
             .decode(type: DataResponse.self, decoder: JSONDecoder())
             .map {
                 print("[DEBUG] \($0)")
-                self.cache.insert($0, forKey: nextUrl)
+//                self.cache.insert($0, forKey: nextUrl)
                 return $0
             }
             .eraseToAnyPublisher()
@@ -65,25 +55,5 @@ class NetworkManager: NetworkManagerProtocol {
                 return $0
             }
             .eraseToAnyPublisher()
-    }
-    
-    func fetchImage(url: URL) -> AnyPublisher<UIImage?, Error> {
-        if let cachedImage = imageCache.value(forKey: url.absoluteString) {
-            return Just(cachedImage)
-                .setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
-        } else {
-            return URLSession.shared.dataTaskPublisher(for: url)
-                .tryMap { data, _ -> UIImage? in
-                    return UIImage(data: data)
-                }
-                .map { image -> UIImage? in
-                    if let image = image {
-                        self.imageCache.insert(image, forKey: url.absoluteString)
-                    }
-                    return image
-                }
-                .eraseToAnyPublisher()
-        }
     }
 }

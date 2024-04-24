@@ -17,7 +17,7 @@ struct CharactersView: View {
     
     @State private var showDetail: Bool = false
     
-    @State private var selectedCharacter: BSCharacter?
+    @State private var selectedCharacter: DomainCharacter?
     
     var body: some View {
         ZStack {

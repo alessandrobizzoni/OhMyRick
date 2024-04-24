@@ -7,8 +7,7 @@
 
 import Foundation
 
-struct BSInfo: Decodable, Equatable {
-    let count: Int
+struct DomainPageInfo: Codable, Equatable {
     let pages: Int
     let next: String?
     let prev: String?

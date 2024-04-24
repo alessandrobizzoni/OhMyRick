@@ -20,9 +20,9 @@ class CharactersViewModel: ObservableObject {
     
     @Published var currentPage: Int = 1
     
-    @Published var responseInfo: BSInfo? = nil
+    @Published var responseInfo: DomainPageInfo? = nil
     
-    @Published var characters: [BSCharacter] = []
+    @Published var characters: [DomainCharacter] = []
     
     @Published var filterParameters: [String: String?] = [:] {
         didSet {
@@ -64,8 +64,8 @@ class CharactersViewModel: ObservableObject {
                     self.errorMessg = error.localizedDescription
                 }
             } receiveValue: { newValue in
-                self.responseInfo = newValue.info
-                self.characters = newValue.results
+                self.responseInfo = newValue.pageInfo
+                self.characters = newValue.characters
                 self.networkError = false
             }
             .store(in: &cancellable)
@@ -90,8 +90,8 @@ class CharactersViewModel: ObservableObject {
                     self.errorMessg = error.localizedDescription
                 }
             } receiveValue: { newValue in
-                self.responseInfo = newValue.info
-                self.characters = newValue.results
+                self.responseInfo = newValue.pageInfo
+                self.characters = newValue.characters
                 self.networkError = false
             }
             .store(in: &cancellable)

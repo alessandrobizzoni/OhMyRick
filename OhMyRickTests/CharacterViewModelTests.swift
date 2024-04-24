@@ -31,11 +31,11 @@ class CharactersViewModelTests: XCTestCase {
     
     func testUpdateCharactersList_NoFilters() {
         let expectedCharacters = [
-            BSCharacter(id: 1, name: "Rick", status: .alive, species: "Human", gender: .male, image: ""),
-            BSCharacter(id: 2, name: "Morty", status: .alive, species: "Human", gender: .male, image: "")
+            DomainCharacter(id: 1, name: "Rick", status: .alive, species: "Human", gender: .male, image: ""),
+            DomainCharacter(id: 2, name: "Morty", status: .alive, species: "Human", gender: .male, image: "")
         ]
         omrInteractor = OMRInteractorMock()
-        omrInteractor.mockResponse = BSResponse(info: BSInfo(count: 2, pages: 1, next: nil, prev: nil), results: expectedCharacters)
+        omrInteractor.mockResponse = BSResponse(info: DomainPageInfo(count: 2, pages: 1, next: nil, prev: nil), results: expectedCharacters)
         viewModel = CharactersViewModel(omrInteractor: omrInteractor)
         viewModel.filterParameters.removeAll()
         
@@ -54,10 +54,10 @@ class CharactersViewModelTests: XCTestCase {
     
     func testUpdateCharactersList_WithFilters() {
         let expectedFilteredCharacters = [
-            BSCharacter(id: 1, name: "Rick", status: .alive, species: "Human", gender: .male, image: ""),
-            BSCharacter(id: 2, name: "Morty", status: .alive, species: "Human", gender: .male, image: "")
+            DomainCharacter(id: 1, name: "Rick", status: .alive, species: "Human", gender: .male, image: ""),
+            DomainCharacter(id: 2, name: "Morty", status: .alive, species: "Human", gender: .male, image: "")
         ]
-        omrInteractor.mockResponse = BSResponse(info: BSInfo(count: 5, pages: 1, next: nil, prev: nil), results: expectedFilteredCharacters)
+        omrInteractor.mockResponse = BSResponse(info: DomainPageInfo(count: 5, pages: 1, next: nil, prev: nil), results: expectedFilteredCharacters)
         viewModel.filterParameters = ["gender": "Male"]
         
         let expectation = XCTestExpectation(description: "Characters loaded")
