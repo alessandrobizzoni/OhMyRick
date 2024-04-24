@@ -44,7 +44,7 @@ class Managers {
     static func getInteractor(for environment: AppEnvironment)  -> OMRInteractorProtocol {
         switch environment {
         case .live:
-            return OMRInteractor()
+            return OMRInteractor(networkManager: NetworkManager())
         case .sandbox:
             return OMRInteractorMock()
         }

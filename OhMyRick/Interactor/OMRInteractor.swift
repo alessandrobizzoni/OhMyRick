@@ -10,7 +10,11 @@ import Combine
 
 class OMRInteractor: OMRInteractorProtocol {
     
-    private var networkManager = NetworkManager()
+    let networkManager: NetworkManagerProtocol
+    
+    init(networkManager: NetworkManagerProtocol) {
+        self.networkManager = networkManager
+    }
     
     func getCharacters(nextPage: String? = nil) -> AnyPublisher<BSResponse, Error> {
         var nextUrl: String = ""
