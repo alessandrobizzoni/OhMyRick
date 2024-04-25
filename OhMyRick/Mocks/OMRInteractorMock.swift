@@ -8,7 +8,6 @@
 import Foundation
 import UIKit
 import Combine
-@testable import OhMyRick
 
 class OMRInteractorMock: OMRInteractorProtocol {
     

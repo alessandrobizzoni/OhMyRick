@@ -7,7 +7,6 @@
 
 import Foundation
 import Combine
-@testable import OhMyRick
 
 class NetworkMock: NetworkProtocol {
     
