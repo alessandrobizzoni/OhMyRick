@@ -32,7 +32,7 @@
 		92E5CED42BCFB566002103C3 /* CharactersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E5CED32BCFB566002103C3 /* CharactersView.swift */; };
 		92E5CED72BCFB5FB002103C3 /* CardCharacter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E5CED62BCFB5FB002103C3 /* CardCharacter.swift */; };
 		92E5CEDA2BCFD788002103C3 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E5CED92BCFD788002103C3 /* Network.swift */; };
-		92E5CEDD2BCFD9BB002103C3 /* RMErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E5CEDC2BCFD9BB002103C3 /* RMErrors.swift */; };
+		92E5CEDD2BCFD9BB002103C3 /* OMRErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E5CEDC2BCFD9BB002103C3 /* OMRErrors.swift */; };
 		92E5CEDF2BD005B9002103C3 /* CharacterDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E5CEDE2BD005B9002103C3 /* CharacterDetailView.swift */; };
 		92E6B9732BD7A8C6004B02E2 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E6B9722BD7A8C5004B02E2 /* Coordinator.swift */; };
 		92E6B9752BD7AA44004B02E2 /* CoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E6B9742BD7AA44004B02E2 /* CoordinatorView.swift */; };
@@ -96,7 +96,7 @@
 		92E5CED32BCFB566002103C3 /* CharactersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersView.swift; sourceTree = "<group>"; };
 		92E5CED62BCFB5FB002103C3 /* CardCharacter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCharacter.swift; sourceTree = "<group>"; };
 		92E5CED92BCFD788002103C3 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
-		92E5CEDC2BCFD9BB002103C3 /* RMErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMErrors.swift; sourceTree = "<group>"; };
+		92E5CEDC2BCFD9BB002103C3 /* OMRErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OMRErrors.swift; sourceTree = "<group>"; };
 		92E5CEDE2BD005B9002103C3 /* CharacterDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterDetailView.swift; sourceTree = "<group>"; };
 		92E6B9722BD7A8C5004B02E2 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		92E6B9742BD7AA44004B02E2 /* CoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorView.swift; sourceTree = "<group>"; };
@@ -256,7 +256,7 @@
 		92E5CEDB2BCFD9A7002103C3 /* Errors */ = {
 			isa = PBXGroup;
 			children = (
-				92E5CEDC2BCFD9BB002103C3 /* RMErrors.swift */,
+				92E5CEDC2BCFD9BB002103C3 /* OMRErrors.swift */,
 			);
 			path = Errors;
 			sourceTree = "<group>";
@@ -487,7 +487,7 @@
 				92E6B9732BD7A8C6004B02E2 /* Coordinator.swift in Sources */,
 				92F3F0762BD96EA90028360A /* NetworkMock.swift in Sources */,
 				92E5CECC2BCFAC0E002103C3 /* CharacterGender.swift in Sources */,
-				92E5CEDD2BCFD9BB002103C3 /* RMErrors.swift in Sources */,
+				92E5CEDD2BCFD9BB002103C3 /* OMRErrors.swift in Sources */,
 				92F3F0792BD96EE40028360A /* OMRInteractorMock.swift in Sources */,
 				9276FE8E2BD56D62001B4EA3 /* OMRAsyncImage.swift in Sources */,
 				9268C7922BD7CF0400BCD3F6 /* NetworkProtocol.swift in Sources */,

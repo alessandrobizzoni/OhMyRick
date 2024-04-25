@@ -22,17 +22,17 @@ class NetworkMock: NetworkProtocol {
             .init(
                 id: 1,
                 name: "Rick",
-                status: .alive,
+                status: "Alive",
                 species: "Human",
-                gender: .male,
+                gender: "Male",
                 image: ""
             ),
             .init(
                 id: 2,
                 name: "Morty",
-                status: .alive,
+                status: "Alive",
                 species: "Human",
-                gender: .male,
+                gender: "Male",
                 image: ""
             )
         ]

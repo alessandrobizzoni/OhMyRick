@@ -19,7 +19,7 @@ class Network: NetworkProtocol {
         let nextUrl: String = !nextPage.isEmpty ? nextPage : charactersURL
         
         guard let url = URL(string: nextUrl) else {
-            return Fail(error: RMErrors.invalidURL).eraseToAnyPublisher()
+            return Fail(error: OMRErrors.invalidURL).eraseToAnyPublisher()
         }
         
         return URLSession.shared.dataTaskPublisher(for: url)
@@ -39,7 +39,7 @@ class Network: NetworkProtocol {
         let nextURL: URLComponents? = !nextPage.isEmpty ? URLComponents(string: nextPage) : nextParametersURL
         
         guard let url = nextURL?.url else {
-            return Fail(error: RMErrors.invalidURL).eraseToAnyPublisher()
+            return Fail(error: OMRErrors.invalidURL).eraseToAnyPublisher()
         }
         
         return URLSession.shared.dataTaskPublisher(for: url)

@@ -7,6 +7,6 @@
 
 import Foundation
 
-enum RMErrors: Error {
+enum OMRErrors: Error {
     case invalidURL
 }
