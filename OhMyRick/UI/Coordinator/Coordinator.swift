@@ -43,13 +43,11 @@ class Coordinator: ObservableObject {
 
 class Managers {
     static func getInteractor(for environment: AppEnvironment)  -> OMRInteractorProtocol {
-        var networking: NetworkProtocol
         switch environment {
         case .live:
-            networking = Network()
+            return OMRInteractor(networkManager: Network(), cache: Cache<String, DomainContent>(), imageCache: Cache<String, UIImage>())
         case .sandbox:
-            networking = NetworkMock()
+            return OMRInteractorMock()
         }
-        return OMRInteractor(networkManager: networking, cache: Cache<String, DomainContent>(), imageCache: Cache<String, UIImage>())
     }
 }

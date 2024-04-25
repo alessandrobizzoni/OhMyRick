@@ -21,4 +21,9 @@ struct DomainContent: Decodable, Equatable {
         pageInfo = try container.decode(DomainPageInfo.self, forKey: .pageInfo)
         characters = try container.decode([DomainCharacter].self, forKey: .characters)
     }
+    
+    init(pageInfo: DomainPageInfo, characters: [DomainCharacter]) {
+        self.pageInfo = pageInfo
+        self.characters = characters
+    }
 }

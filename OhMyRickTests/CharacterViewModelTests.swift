@@ -35,7 +35,7 @@ class CharactersViewModelTests: XCTestCase {
             DomainCharacter(id: 2, name: "Morty", status: .alive, species: "Human", gender: .male, image: "")
         ]
         omrInteractor = OMRInteractorMock()
-        omrInteractor.mockResponse = BSResponse(info: DomainPageInfo(count: 2, pages: 1, next: nil, prev: nil), results: expectedCharacters)
+        omrInteractor.mockResponse = DomainContent(pageInfo: DomainPageInfo(pages: 1, next: nil, prev: nil), characters: expectedCharacters)
         viewModel = CharactersViewModel(omrInteractor: omrInteractor)
         viewModel.filterParameters.removeAll()
         
@@ -57,7 +57,7 @@ class CharactersViewModelTests: XCTestCase {
             DomainCharacter(id: 1, name: "Rick", status: .alive, species: "Human", gender: .male, image: ""),
             DomainCharacter(id: 2, name: "Morty", status: .alive, species: "Human", gender: .male, image: "")
         ]
-        omrInteractor.mockResponse = BSResponse(info: DomainPageInfo(count: 5, pages: 1, next: nil, prev: nil), results: expectedFilteredCharacters)
+        omrInteractor.mockResponse = DomainContent(pageInfo: DomainPageInfo(pages: 1, next: nil, prev: nil), characters: expectedFilteredCharacters)
         viewModel.filterParameters = ["gender": "Male"]
         
         let expectation = XCTestExpectation(description: "Characters loaded")

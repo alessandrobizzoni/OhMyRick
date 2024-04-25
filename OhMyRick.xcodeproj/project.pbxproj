@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		920B61702BDA2DE100CA78AC /* NetworkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920B616F2BDA2DE100CA78AC /* NetworkTests.swift */; };
+		920B61722BDA311D00CA78AC /* CoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920B61712BDA311D00CA78AC /* CoordinatorTests.swift */; };
 		9268C7922BD7CF0400BCD3F6 /* NetworkProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9268C7912BD7CF0400BCD3F6 /* NetworkProtocol.swift */; };
 		9268C79C2BD80FD100BCD3F6 /* CharacterStatusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9268C79B2BD80FD100BCD3F6 /* CharacterStatusTests.swift */; };
 		9268C79E2BD8104C00BCD3F6 /* CacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9268C79D2BD8104C00BCD3F6 /* CacheTests.swift */; };
@@ -66,6 +68,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		920B616F2BDA2DE100CA78AC /* NetworkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkTests.swift; sourceTree = "<group>"; };
+		920B61712BDA311D00CA78AC /* CoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorTests.swift; sourceTree = "<group>"; };
 		9268C7912BD7CF0400BCD3F6 /* NetworkProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtocol.swift; sourceTree = "<group>"; };
 		9268C79B2BD80FD100BCD3F6 /* CharacterStatusTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharacterStatusTests.swift; sourceTree = "<group>"; };
 		9268C79D2BD8104C00BCD3F6 /* CacheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheTests.swift; sourceTree = "<group>"; };
@@ -184,6 +188,8 @@
 				9268C79F2BD81E4500BCD3F6 /* CharacterPagesTests.swift */,
 				9268C7A32BD81F5100BCD3F6 /* CardCharacterTests.swift */,
 				92F3F06E2BD93A2F0028360A /* OMRInteractorTests.swift */,
+				920B616F2BDA2DE100CA78AC /* NetworkTests.swift */,
+				920B61712BDA311D00CA78AC /* CoordinatorTests.swift */,
 			);
 			path = OhMyRickTests;
 			sourceTree = "<group>";
@@ -495,11 +501,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				920B61702BDA2DE100CA78AC /* NetworkTests.swift in Sources */,
 				9268C7A02BD81E4500BCD3F6 /* CharacterPagesTests.swift in Sources */,
 				9268C7A42BD81F5100BCD3F6 /* CardCharacterTests.swift in Sources */,
 				92F3F07A2BD96EE40028360A /* OMRInteractorMock.swift in Sources */,
 				9276FE902BD58631001B4EA3 /* CharacterViewModelTests.swift in Sources */,
 				92F3F06F2BD93A2F0028360A /* OMRInteractorTests.swift in Sources */,
+				920B61722BDA311D00CA78AC /* CoordinatorTests.swift in Sources */,
 				9268C79C2BD80FD100BCD3F6 /* CharacterStatusTests.swift in Sources */,
 				9268C79E2BD8104C00BCD3F6 /* CacheTests.swift in Sources */,
 				92F3F0772BD96EA90028360A /* NetworkMock.swift in Sources */,

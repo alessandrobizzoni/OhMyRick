@@ -108,4 +108,46 @@ class OMRInteractorTests: XCTestCase {
         
         waitForExpectations(timeout: 5, handler: nil)
     }
+    
+    func testFetchImageWithValidURL() {
+        let expectation = XCTestExpectation(description: "Fetch image with valid URL")
+        let imageURL = URL(string: "https://rickandmortyapi.com/api/character/avatar/1.jpeg")!
+
+        let cancellable = interactor.fetchImage(url: imageURL)
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .finished:
+                    break
+                case .failure(let error):
+                    XCTFail("Failed to fetch image with valid URL and error: \(error)")
+                }
+                expectation.fulfill()
+            }, receiveValue: { image in
+                XCTAssertNotNil(image)
+            })
+
+        wait(for: [expectation], timeout: 5.0)
+        cancellable.cancel()
+    }
+
+    func testFetchImageWithInvalidURL() {
+        let expectation = XCTestExpectation(description: "Fetch image with invalid URL")
+        let invalidURL = URL(string: "invalid-url")!
+
+        let cancellable = interactor.fetchImage(url: invalidURL)
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .finished:
+                    XCTFail("Fetch image with invalid URL should fail")
+                case .failure(let error):
+                    XCTAssertTrue(error is URLError)
+                    expectation.fulfill()
+                }
+            }, receiveValue: { image in
+                XCTFail("Should not receive image for invalid URL")
+            })
+
+        wait(for: [expectation], timeout: 5.0)
+        cancellable.cancel()
+    }
 }

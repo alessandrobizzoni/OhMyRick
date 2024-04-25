@@ -13,14 +13,14 @@ class OMRInteractor: OMRInteractorProtocol {
     
     let networkManager: NetworkProtocol
     
-    private var cache: Cache<String, DomainContent>
+    var cache: Cache<String, DomainContent>
     
-      private var imageCache: Cache<String, UIImage>
+    var imageCache: Cache<String, UIImage>
     
     init(networkManager: NetworkProtocol, cache: Cache<String, DomainContent>, imageCache: Cache<String, UIImage>) {
         self.networkManager = networkManager
-          self.cache = cache
-          self.imageCache = imageCache
+        self.cache = cache
+        self.imageCache = imageCache
     }
     
     func getCharacters(nextPage: String? = nil) -> AnyPublisher<DomainContent, Error> {

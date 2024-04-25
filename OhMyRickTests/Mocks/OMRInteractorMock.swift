@@ -8,12 +8,13 @@
 import Foundation
 import UIKit
 import Combine
+@testable import OhMyRick
 
 class OMRInteractorMock: OMRInteractorProtocol {
     
-    var mockResponse: DataResponse = DataResponse(
-        info: .init(count: 2, pages: 1, next: "nextPage", prev: "prevPage"),
-        results: [
+    var mockResponse: DomainContent = DomainContent(
+        pageInfo: .init(pages: 1, next: "nextPage", prev: "prevPage"),
+        characters: [
             .init(id: 1, name: "Rick Sanchez", status: .alive, species: "Human", gender: .male, image: "https://example.com/rick.jpg"),
             .init(id: 2, name: "Morty Smith", status: .alive, species: "Human", gender: .female, image: "https://example.com/morty.jpg")
         ]
@@ -26,8 +27,7 @@ class OMRInteractorMock: OMRInteractorProtocol {
             return Fail(error: NSError(domain: "TestErrorDomain", code: 123, userInfo: nil)).eraseToAnyPublisher()
         } else {
             return Just(mockResponse)
-                .encode(encoder: JSONEncoder())
-                .decode(type: DomainContent.self, decoder: JSONDecoder())
+                .setFailureType(to: Error.self)
                 .eraseToAnyPublisher()
         }
     }
@@ -37,8 +37,7 @@ class OMRInteractorMock: OMRInteractorProtocol {
             return Fail(error: NSError(domain: "TestErrorDomain", code: 123, userInfo: nil)).eraseToAnyPublisher()
         } else {
             return Just(mockResponse)
-                .encode(encoder: JSONEncoder())
-                .decode(type: DomainContent.self, decoder: JSONDecoder())
+                .setFailureType(to: Error.self)
                 .eraseToAnyPublisher()
         }
     }
