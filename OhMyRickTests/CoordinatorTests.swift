@@ -17,7 +17,7 @@ class ManagersTests: XCTestCase {
 
     func testGetInteractorForSandboxEnvironment() {
         let interactor = Managers.getInteractor(for: .sandbox)
-        XCTAssertTrue(interactor is OMRInteractorProtocol)
+        XCTAssertTrue(interactor is OMRInteractorMock)
     }
 }
 
