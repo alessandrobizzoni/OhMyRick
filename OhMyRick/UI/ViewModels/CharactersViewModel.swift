@@ -8,11 +8,11 @@
 import Foundation
 import Combine
 
-class CharactersViewModel: ObservableObject {
+final class CharactersViewModel: ObservableObject {
     
-    var omrInteractor: OMRInteractorProtocol
+    private var omrInteractor: OMRInteractorProtocol
     
-    var cancellable: Set<AnyCancellable> = Set<AnyCancellable>()
+    private var cancellable: Set<AnyCancellable> = Set<AnyCancellable>()
     
     @Published var networkError: Bool = false
     
@@ -37,7 +37,6 @@ class CharactersViewModel: ObservableObject {
     }
     
     func updateCharactersList(_ goToPage: CharacterPages? = nil) {
-        print("Filters \(filterParameters)")
         if filterParameters["gender"] == nil, filterParameters["name"] == nil {
             getAllCharacters(goToPage)
         } else {
@@ -53,20 +52,19 @@ class CharactersViewModel: ObservableObject {
         
         omrInteractor.getCharacters(nextPage: nextPage)
             .receive(on: DispatchQueue.main)
-            .sink { completion in
+            .sink { [weak self] completion in
                 switch completion {
                 case .finished:
-                    print("Request done")
+                    return
                     
                 case .failure(let error):
-                    print("[DEBUG ERROR] \(error.localizedDescription)")
-                    self.networkError = true
-                    self.errorMessg = error.localizedDescription
+                    self?.networkError = true
+                    self?.errorMessg = error.localizedDescription
                 }
-            } receiveValue: { newValue in
-                self.responseInfo = newValue.pageInfo
-                self.characters = newValue.characters
-                self.networkError = false
+            } receiveValue: { [weak self] newValue in
+                self?.responseInfo = newValue.pageInfo
+                self?.characters = newValue.characters
+                self?.networkError = false
             }
             .store(in: &cancellable)
     }
@@ -79,20 +77,19 @@ class CharactersViewModel: ObservableObject {
         
         omrInteractor.getFilteredCharacters(filterParameters: filterParameters, nextPage: nextPage)
             .receive(on: DispatchQueue.main)
-            .sink { completion in
+            .sink { [weak self] completion in
                 switch completion {
                 case .finished:
-                    print("Request done")
+                    return
                     
                 case .failure(let error):
-                    print("[DEBUG ERROR] \(error.localizedDescription)")
-                    self.networkError = true
-                    self.errorMessg = error.localizedDescription
+                    self?.networkError = true
+                    self?.errorMessg = error.localizedDescription
                 }
-            } receiveValue: { newValue in
-                self.responseInfo = newValue.pageInfo
-                self.characters = newValue.characters
-                self.networkError = false
+            } receiveValue: { [weak self] newValue in
+                self?.responseInfo = newValue.pageInfo
+                self?.characters = newValue.characters
+                self?.networkError = false
             }
             .store(in: &cancellable)
     }

@@ -20,6 +20,7 @@
 		9276FE902BD58631001B4EA3 /* CharacterViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9276FE8F2BD58631001B4EA3 /* CharacterViewModelTests.swift */; };
 		92C6B0C12BDA4090002ADC2A /* OMRInteractorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F3F0782BD96EE40028360A /* OMRInteractorMock.swift */; };
 		92C6B0C22BDA42FF002ADC2A /* NetworkMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F3F0752BD96EA90028360A /* NetworkMock.swift */; };
+		92C6B0C42BDA4C7D002ADC2A /* CharactersViewUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C6B0C32BDA4C7D002ADC2A /* CharactersViewUITests.swift */; };
 		92E5CE9C2BCFA1D2002103C3 /* OhMyRickApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E5CE9B2BCFA1D2002103C3 /* OhMyRickApp.swift */; };
 		92E5CE9E2BCFA1D2002103C3 /* OhMyRickMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E5CE9D2BCFA1D2002103C3 /* OhMyRickMainView.swift */; };
 		92E5CEA02BCFA1D3002103C3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92E5CE9F2BCFA1D3002103C3 /* Assets.xcassets */; };
@@ -76,6 +77,7 @@
 		9276FE8B2BD565E1001B4EA3 /* Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
 		9276FE8D2BD56D62001B4EA3 /* OMRAsyncImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OMRAsyncImage.swift; sourceTree = "<group>"; };
 		9276FE8F2BD58631001B4EA3 /* CharacterViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterViewModelTests.swift; sourceTree = "<group>"; };
+		92C6B0C32BDA4C7D002ADC2A /* CharactersViewUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersViewUITests.swift; sourceTree = "<group>"; };
 		92E5CE982BCFA1D2002103C3 /* OhMyRick.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OhMyRick.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		92E5CE9B2BCFA1D2002103C3 /* OhMyRickApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OhMyRickApp.swift; sourceTree = "<group>"; };
 		92E5CE9D2BCFA1D2002103C3 /* OhMyRickMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OhMyRickMainView.swift; sourceTree = "<group>"; };
@@ -194,18 +196,19 @@
 			children = (
 				92E5CEB62BCFA1D3002103C3 /* OhMyRickUITests.swift */,
 				92E5CEB82BCFA1D3002103C3 /* OhMyRickUITestsLaunchTests.swift */,
+				92C6B0C32BDA4C7D002ADC2A /* CharactersViewUITests.swift */,
 			);
 			path = OhMyRickUITests;
 			sourceTree = "<group>";
 		};
-		92E5CEC82BCFABE8002103C3 /* Enums */ = {
+		92E5CEC82BCFABE8002103C3 /* ContentAttributes */ = {
 			isa = PBXGroup;
 			children = (
 				92E5CEC92BCFABFD002103C3 /* CharacterStatus.swift */,
 				92E5CECB2BCFAC0E002103C3 /* CharacterGender.swift */,
 				9276FE892BD4137A001B4EA3 /* CharacterPages.swift */,
 			);
-			path = Enums;
+			path = ContentAttributes;
 			sourceTree = "<group>";
 		};
 		92E5CECF2BCFB001002103C3 /* Views */ = {
@@ -306,7 +309,7 @@
 			isa = PBXGroup;
 			children = (
 				92F3F0732BD956EE0028360A /* Models */,
-				92E5CEC82BCFABE8002103C3 /* Enums */,
+				92E5CEC82BCFABE8002103C3 /* ContentAttributes */,
 				92F3F0582BD91D6A0028360A /* Interactor */,
 			);
 			path = Domain;
@@ -511,6 +514,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				92E5CEB92BCFA1D3002103C3 /* OhMyRickUITestsLaunchTests.swift in Sources */,
+				92C6B0C42BDA4C7D002ADC2A /* CharactersViewUITests.swift in Sources */,
 				92E5CEB72BCFA1D3002103C3 /* OhMyRickUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

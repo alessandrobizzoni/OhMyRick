@@ -9,31 +9,45 @@ import SwiftUI
 
 struct OhMyRickMainView: View {
     
-    @EnvironmentObject private var coordinator: Coordinator
+    let kButtonSectionWidth: CGFloat = 150
+    
+    let kButtonSectionHeight: CGFloat = 50
+    
+    let kButtonSectionRadius: CGFloat = 6.0
+    
+    let kButtonSectionTextSize: CGFloat = 20
+    
+    let kTitleHeight: CGFloat = 100
+    
+    let kTitleSize: CGFloat = 50
+    
+    let kPortalHeight: CGFloat = 320
     
     let kScreenTitle: String = "Oh My Rick"
     
-    let kScreenSubtitle: String = "The Rick's extended documentation"
+    let kButtonCharactersTitle: String = "Characters"
+    
+    @EnvironmentObject private var coordinator: Coordinator
     
     var body: some View {
         VStack(spacing: 80) {
             Text(kScreenTitle)
                 .font(
                     .system(
-                        size: 50,
+                        size: kTitleSize,
                         weight: .bold,
                         design: .rounded
                     )
                 )
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .frame(height: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, alignment: .top)
+                .frame(height: kTitleHeight, alignment: .top)
                 .padding(.top)
             
             HStack(spacing: 10) {
-                Text("Characters")
+                Text(kButtonCharactersTitle)
                     .font(
                         .system(
-                            size: 20,
+                            size: kButtonSectionTextSize,
                             weight: .bold,
                             design: .rounded
                         )
@@ -42,8 +56,8 @@ struct OhMyRickMainView: View {
                     .background {
                         Rectangle()
                             .fill(Color.secondaryRick)
-                            .cornerRadius(6.0)
-                            .frame(width: 150, height: 50)
+                            .cornerRadius(kButtonSectionRadius)
+                            .frame(width: kButtonSectionWidth, height: kButtonSectionHeight)
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .onTapGesture {
@@ -51,7 +65,7 @@ struct OhMyRickMainView: View {
                     }
                 
                 portalImage
-                    .frame(height: 320)
+                    .frame(height: kPortalHeight)
             }
         }
         .padding()

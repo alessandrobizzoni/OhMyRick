@@ -9,6 +9,16 @@ import SwiftUI
 
 struct CharacterDetailView: View {
     
+    let kCardWidth: CGFloat = 300
+    
+    let kCardHeight: CGFloat = 525
+    
+    let kImageHeight: CGFloat = 225
+    
+    let kCloseButtonSize: CGFloat = 30
+    
+    let kCloseXMarkSize: CGFloat = 44
+    
     let character: DomainCharacter
     
     @Binding var isShowingDetail: Bool
@@ -19,7 +29,7 @@ struct CharacterDetailView: View {
                 image
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(width: 300, height: 225)
+                    .frame(width: kCardWidth, height: kImageHeight)
             } placeholder: {
                 Image(.portal)
             }
@@ -38,7 +48,7 @@ struct CharacterDetailView: View {
             
             Spacer()
         }
-        .frame(width: 300, height: 525)
+        .frame(width: kCardWidth, height: kCardHeight)
         .background(Color.secondaryRick)
         .cornerRadius(12)
         .shadow(radius: 40)
@@ -48,13 +58,13 @@ struct CharacterDetailView: View {
             } label: {
                 ZStack {
                     Circle()
-                        .frame(width: 30, height: 30)
+                        .frame(width: kCloseButtonSize, height: kCloseButtonSize)
                         .foregroundColor(.white)
                         .opacity(0.6)
                     
                     Image(systemName: "xmark")
                         .imageScale(.small)
-                        .frame(width: 44, height: 44)
+                        .frame(width: kCloseXMarkSize, height: kCloseXMarkSize)
                         .foregroundColor(.black)
                 }
             }, alignment: .topTrailing

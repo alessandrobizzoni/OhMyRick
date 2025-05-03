@@ -88,4 +88,26 @@ class CharactersViewModelTests: XCTestCase {
         
         wait(for: [expectation], timeout: 5.0)
     }
+    
+    func testGetCharacters() {
+        let expectation = expectation(description: "Characters received")
+        
+        viewModel.getAllCharacters()
+        
+        omrInteractor.getCharacters(nextPage: nil)
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .finished:
+                    break
+                case .failure(let error):
+                    XCTFail("Error occurred: \(error.localizedDescription)")
+                }
+                expectation.fulfill()
+            }, receiveValue: { response in
+                XCTAssertNotNil(response)
+            })
+            .store(in: &cancellables)
+        
+        waitForExpectations(timeout: 5, handler: nil)
+    }
 }

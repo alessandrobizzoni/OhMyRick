@@ -30,7 +30,6 @@ class OMRInteractor: OMRInteractorProtocol {
         }
         
         if let cachedCharacters = cache.value(forKey: nextUrl) {
-            print("[LOG] Cache \(nextUrl) returned")
             return Just(cachedCharacters)
                 .setFailureType(to: Error.self)
                 .eraseToAnyPublisher()
@@ -39,8 +38,8 @@ class OMRInteractor: OMRInteractorProtocol {
         return networkManager.getCharacters(nextPage: nextUrl)
             .encode(encoder: JSONEncoder())
             .decode(type: DomainContent.self, decoder: JSONDecoder())
-            .map {
-                self.cache.insert($0, forKey: nextUrl)
+            .map { [weak self] in
+                self?.cache.insert($0, forKey: nextUrl)
                 return $0
             }
             .eraseToAnyPublisher()
@@ -68,9 +67,9 @@ class OMRInteractor: OMRInteractorProtocol {
                 .tryMap { data, _ -> UIImage? in
                     return UIImage(data: data)
                 }
-                .map { image -> UIImage? in
+                .map { [weak self] image -> UIImage? in
                     if let image = image {
-                        self.imageCache.insert(image, forKey: url.absoluteString)
+                        self?.imageCache.insert(image, forKey: url.absoluteString)
                     }
                     return image
                 }

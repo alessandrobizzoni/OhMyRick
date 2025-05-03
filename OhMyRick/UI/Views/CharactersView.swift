@@ -9,6 +9,16 @@ import SwiftUI
 
 struct CharactersView: View {
     
+    let kGenderFilter: String = "gender"
+    
+    let kXMarkSize: CGFloat = 5
+    
+    let kCircleXMarkSize: CGFloat = 15
+    
+    let kFilterButtonWidth: CGFloat = 110
+    
+    let kFilterButtonHeight: CGFloat = 50
+    
     @EnvironmentObject private var coordinator: Coordinator
     
     @StateObject var viewModel: CharactersViewModel
@@ -69,21 +79,27 @@ struct CharactersView: View {
 // MARK: - Helper Views
 private extension CharactersView {
     var charactersList: some View {
-        VStack(alignment: .leading) {
-            List(viewModel.characters) { character in
-                CardCharacter(
-                    title: character.name,
-                    image: character.image
-                )
-                .listRowBackground(Color.primaryRick)
-                .onTapGesture {
-                    withAnimation {
-                        showDetail = true
+        ScrollViewReader { proxy in
+            VStack(alignment: .leading) {
+                List(viewModel.characters) { character in
+                    CardCharacter(
+                        title: character.name,
+                        image: character.image
+                    )
+                    .id(character.id)
+                    .listRowBackground(Color.primaryRick)
+                    .onTapGesture {
+                        withAnimation {
+                            showDetail = true
+                        }
+                        selectedCharacter = character
                     }
-                    selectedCharacter = character
                 }
+                .listStyle(.plain)
             }
-            .listStyle(.plain)
+            .onChange(of: viewModel.characters) { value in
+                proxy.scrollTo(viewModel.characters[0].id)
+            }
         }
     }
     
@@ -92,10 +108,10 @@ private extension CharactersView {
             ForEach(CharacterGender.allCases, id: \.self) { gender in
                 Button {
                     if viewModel.selectedGender == gender {
-                        viewModel.filterParameters.removeValue(forKey: "gender")
+                        viewModel.filterParameters.removeValue(forKey: kGenderFilter)
                         viewModel.selectedGender = nil
                     } else {
-                        viewModel.filterParameters.updateValue(gender.rawValue, forKey: "gender")
+                        viewModel.filterParameters.updateValue(gender.rawValue, forKey: kGenderFilter)
                         viewModel.selectedGender = gender
                     }
                     viewModel.currentPage = 1
@@ -103,7 +119,7 @@ private extension CharactersView {
                     ZStack {
                         Rectangle()
                             .fill(Color.secondaryRick)
-                            .frame(width: 110, height: 50)
+                            .frame(width: kFilterButtonWidth, height: kFilterButtonHeight)
                             .cornerRadius(6.0)
                         Text(gender.rawValue)
                             .font(.system(size: 16, weight: .semibold, design: .rounded))
@@ -111,12 +127,12 @@ private extension CharactersView {
                         if viewModel.selectedGender == gender {
                             Group {
                                 Circle()
-                                    .frame(width: 15, height: 15)
+                                    .frame(width: kCircleXMarkSize, height: kCircleXMarkSize)
                                     .foregroundColor(.white)
                                 
                                 Image(systemName: "xmark")
                                     .imageScale(.small)
-                                    .frame(width: 5, height: 5)
+                                    .frame(width: kXMarkSize, height: kXMarkSize)
                                     .foregroundColor(.black)
                             }
                             .offset(x: 55, y: -25)
@@ -127,6 +143,7 @@ private extension CharactersView {
                 .padding(.horizontal, 5)
             }
         }
+        .padding(.top, 10)
     }
     
     var emptyState: some View {

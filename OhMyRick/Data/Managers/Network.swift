@@ -45,10 +45,6 @@ class Network: NetworkProtocol {
         return URLSession.shared.dataTaskPublisher(for: url)
             .map(\.data)
             .decode(type: DataResponse.self, decoder: JSONDecoder())
-            .map {
-                print("[DEBUG] \($0)")
-                return $0
-            }
             .eraseToAnyPublisher()
     }
 }
